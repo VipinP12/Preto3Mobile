@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "226541264319",
+    "firebase_url": "https://preto3-d3fa9.firebaseio.com",
+    "project_id": "preto3-d3fa9",
+    "storage_bucket": "preto3-d3fa9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226541264319:android:c9589e5fdafb2dc88bd50a",
+        "android_client_info": {
+          "package_name": "com.teknol.preto3lite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "226541264319-f9lalt8vkkfod39q3ucss2elc84gjqa5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZkJwTPAwO91d-bCuhTwDurtj08KlWgmQ"
+        },
+        {
+          "current_key": "AIzaSyCAlkHLmhM5ho_uXEctCkG_hflHmDEJgKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "226541264319-dsb3df5akbu4fl7ehim8aj77g0pf2tla.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "226541264319-2k479k52o6ke9bba3mgnlg1smflqhjqq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "xyz.teknol.preto3",
+                "app_store_id": "1206763797"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226541264319:android:a52aedcf460cbb3e",
+        "android_client_info": {
+          "package_name": "xyz.teknol.preto3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "226541264319-f9lalt8vkkfod39q3ucss2elc84gjqa5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZkJwTPAwO91d-bCuhTwDurtj08KlWgmQ"
+        },
+        {
+          "current_key": "AIzaSyCAlkHLmhM5ho_uXEctCkG_hflHmDEJgKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "226541264319-dsb3df5akbu4fl7ehim8aj77g0pf2tla.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "226541264319-2k479k52o6ke9bba3mgnlg1smflqhjqq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "xyz.teknol.preto3",
+                "app_store_id": "1206763797"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
