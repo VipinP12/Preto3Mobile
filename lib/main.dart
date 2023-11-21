@@ -121,7 +121,6 @@ import 'binding/Parent/invoice_details_binding.dart';
 import 'binding/Parent/view_invoice_binding.dart';
 import 'binding/Staff/add_emergency_binding.dart';
 import 'binding/event_details_binding.dart';
-// import 'components/custom_dialog.dart';
 import 'view/CommunicationModule/communcation_page.dart';
 import 'view/StaffModule/staff_dashboard_page.dart';
 import 'view/StaffModule/student_profile_details.dart';

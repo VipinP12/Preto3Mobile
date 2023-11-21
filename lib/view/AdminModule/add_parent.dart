@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../utils/app_color.dart';
 import '../../utils/comman_textStyle.dart';
+import '../../utils/comman_textfield.dart';
 
 class AddPrimaryParent extends StatelessWidget {
   const AddPrimaryParent({super.key});
@@ -30,7 +31,17 @@ class AddPrimaryParent extends StatelessWidget {
         ],
 
       ),
-      body: Container(),
+      body:   const Padding(
+        padding:   EdgeInsets.symmetric(vertical: 20,horizontal: 20),
+        child:   Column(
+          children: [
+            CommonTextField(hintText: 'First Name', title: "First Name",),
+            CommonTextField(hintText: 'Last Name', title: "Last Name",),
+            CommonTextField(hintText: 'Example@12gmail.com', title: "Email",),
+            CommonTextField(hintText: '1234567890', title: "Contact",),
+          ],
+        ),
+      ),
     );
   }
 }
