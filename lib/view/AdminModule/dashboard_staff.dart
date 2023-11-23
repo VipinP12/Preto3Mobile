@@ -18,10 +18,6 @@ class AdminDashboardStaff extends StatelessWidget {
 
   final adminStaffController = Get.find<AdminStaffController>();
 
-  // List<String> items = ["vandana","verma","hello"];
-  //
-  // String? selectedValue = "vandana";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -175,54 +171,7 @@ class AdminDashboardStaff extends StatelessWidget {
               child: GetBuilder<AdminStaffController>(builder: (controller) {
                return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child:
-                  // DropdownButton<String>(
-                  //   elevation: 5,
-                  //   hint: Align(
-                  //     alignment: Alignment.centerLeft,
-                  //     child: Text(
-                  //       'Select************',
-                  //       style: GoogleFonts.poppins(
-                  //         color: AppColor.lightTextColor,
-                  //         fontSize: 14,
-                  //         fontWeight: FontWeight.w400,
-                  //       ),
-                  //     ),
-                  //   ),
-                  //   isExpanded: true,
-                  //   icon: Visibility(
-                  //     visible: true,
-                  //     child: SvgPicture.asset(AppAssets.dropdownIcon),
-                  //   ),
-                  //   dropdownColor: AppColor.white,
-                  //   borderRadius: BorderRadius.circular(10),
-                  //   iconEnabledColor: AppColor.appPrimary,
-                  //   underline: Container(),
-                  //   alignment: Alignment.topCenter,
-                  //   items: items.map((String item) =>
-                  //       DropdownMenuItem<String>(
-                  //       value: item,
-                  //       child: Text(
-                  //         item,
-                  //         style: GoogleFonts.poppins(
-                  //           color: AppColor.heavyTextColor,
-                  //           fontSize: 14,
-                  //           fontWeight: FontWeight.w400,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ).toList(),
-                  //   onChanged: (changed) {
-                  //     print("Selected value: $changed");
-                  //     setState((){
-                  //       selectedValue = changed;
-                  //     });
-                  //
-                  //   },
-                  //   value: selectedValue, // Set the initial value if needed
-                  // ),
-
-                 DropdownButton<RoomListModel>(
+                  child: DropdownButton<RoomListModel>(
                     elevation: 5,
                     hint: Align(
                       alignment: Alignment.centerLeft,
@@ -244,7 +193,6 @@ class AdminDashboardStaff extends StatelessWidget {
                     items:
                     controller.allRoomList.map((
                         RoomListModel? room) {
-                      print("()()()() ${controller.allRoomList}");
                       return DropdownMenuItem<RoomListModel>(
                           value: room, child: Text(
                         room!.className.toString(),
@@ -257,8 +205,6 @@ class AdminDashboardStaff extends StatelessWidget {
                     ).toList(),
                     onChanged: (changed){
                       controller.setRoom(changed!);
-                      print("hello*******");
-                      log("Selected**********:${controller.selectedClassRoom}");
                     },
                     value: controller.myRoom,
                   ),

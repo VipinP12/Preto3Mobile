@@ -3,7 +3,7 @@ class ApiEndPoints {
   //static const devBaseUrl = "https://backend-new.preto3.com";
   //prod
   // static const devBaseUrl = "https://api.preto3.com";
-  // static const devBaseUrl = "http://192.168.1.80:8082";
+  // static const devBaseUrl = "http://192.168.1.57:8082";
   static const devBaseUrl = "http://3.21.186.48:8080/preto3lite";
   static const clientId = "93750";                                                                
   static const socketUrl = "wss://chat.migration.preto3.com:8080/chat/";
@@ -115,6 +115,7 @@ class ApiEndPoints {
       "/openFireCommunication/sendPushNotifications";
   //ADMIN
   static const allRoomRatio = "/dashboard/getRoomRatioDashboard?schoolId=1002939&isWebRequest=true&timezone=Asia/Calcutta";
-  static const adminProfileDetail =
-      "/profile/adminProfileDetails";
+  static const adminProfileDetail = "/profile/adminProfileDetails";
+  static const allActiveStaffList = "staff/allStaff";
+  // http://192.168.1.57:8082/staff/allStaff?classId=0&isActive=true&schoolId=1002939
 }

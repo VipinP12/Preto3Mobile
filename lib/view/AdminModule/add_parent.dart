@@ -29,9 +29,8 @@ class AddPrimaryParent extends StatelessWidget {
             ),
           )
         ],
-
       ),
-      body:   const Padding(
+      body:  const Padding(
         padding:   EdgeInsets.symmetric(vertical: 20,horizontal: 20),
         child:   Column(
           children: [

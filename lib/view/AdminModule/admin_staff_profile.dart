@@ -6,23 +6,21 @@ import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
 
 import '../../components/rounded_button.dart';
+import '../../controller/Admin/admin_staff_profile.dart';
 import '../../utils/comman_textStyle.dart';
 import '../../utils/comman_textfield.dart';
 
 class AdminStaffProfile extends StatefulWidget {
-  const AdminStaffProfile({Key? key}) : super(key: key);
+    const AdminStaffProfile({Key? key}) : super(key: key);
 
   @override
   State<AdminStaffProfile> createState() => _AdminStaffProfileState();
 }
 
 class _AdminStaffProfileState extends State<AdminStaffProfile> {
-  String selectedValue = 'Hindi';
-  String selectedRole = 'Teacher';
-  String selectedAssignName = 'Assign New Room';
-  bool isSwitched = false;
 
-  // final staffController = Get.find<StaffDashboardController>();
+  final staffController = Get.find<AdminStaffProfileController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -307,7 +305,7 @@ class _AdminStaffProfileState extends State<AdminStaffProfile> {
                       children: [
                         Expanded(
                           child: DropdownButton<String>(
-                            value: selectedValue,
+                            value: staffController.selectedValue,
                             items: <String>['Hindi', 'English',]
                                 .map((String value) {
                               return DropdownMenuItem<String>(
@@ -320,7 +318,7 @@ class _AdminStaffProfileState extends State<AdminStaffProfile> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               setState(() {
-                                selectedValue = newValue!;
+                                staffController.selectedValue = newValue!;
                               });
                             },
                             isExpanded: true,
@@ -341,7 +339,7 @@ class _AdminStaffProfileState extends State<AdminStaffProfile> {
                       children: [
                         Expanded(
                           child: DropdownButton<String>(
-                            value: selectedRole,
+                            value: staffController.selectedRole,
                             items: <String>['Teacher', 'Cordinator',]
                                 .map((String value) {
                               return DropdownMenuItem<String>(
@@ -354,7 +352,7 @@ class _AdminStaffProfileState extends State<AdminStaffProfile> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               setState(() {
-                                selectedRole = newValue!;
+                                staffController.selectedRole = newValue!;
                               });
                             },
                             isExpanded: true,
@@ -474,7 +472,7 @@ class _AdminStaffProfileState extends State<AdminStaffProfile> {
                       children: [
                         Expanded(
                           child: DropdownButton<String>(
-                            value: selectedAssignName,
+                            value: staffController.selectedAssignName,
                             items: <String>['Assign New Room','Hello']
                                 .map((String value) {
                               return DropdownMenuItem<String>(
@@ -487,7 +485,7 @@ class _AdminStaffProfileState extends State<AdminStaffProfile> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               setState(() {
-                                selectedAssignName = newValue!;
+                                staffController.selectedAssignName = newValue!;
                               });
                             },
                             isExpanded: true,
@@ -508,10 +506,10 @@ class _AdminStaffProfileState extends State<AdminStaffProfile> {
                          scale: 1,
                        child: CupertinoSwitch(
                          activeColor: Colors.red,
-                         value: isSwitched,
+                         value: staffController.isSwitched,
                          onChanged: (value) {
                            setState(() {
-                             isSwitched = value;
+                             staffController.isSwitched = value;
                            });
                          },
                        ),
@@ -535,6 +533,4 @@ class _AdminStaffProfileState extends State<AdminStaffProfile> {
       ),
     );
   }
-
-
 }

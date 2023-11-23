@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import '../../model/admit/all_staff.dart';
 import '../../model/room_list_model.dart';
 import '../../model/room_selected_model.dart';
 import '../../network/api_end_points.dart';
@@ -24,7 +25,7 @@ class AdminStaffController extends GetxController with BaseController {
   var staffCheckedIn = 0.obs;
   var staffCheckedOut = 0.obs;
   var staffAbsent = 0.obs;
-
+  final allStaffListNew = <AllStaffList>[].obs;
   final allStudentList = <RoomSelectedModel?>[].obs;
   final allRoomList = <RoomListModel?>[].obs;
   RoomListModel? myRoom;
@@ -50,6 +51,8 @@ class AdminStaffController extends GetxController with BaseController {
   void onInit() {
     roleId.value = storageBox.read(AppKeys.keyRoleId);
     schoolId.value = storageBox.read(AppKeys.keySchoolId);
+    // classId.value = argumentData[ArgumentKeys.argumentClassId];
+    // classId.value = storageBox.read(AppKeys.keyClassId);
     log(argumentData.toString());
      staffTotal.value = argumentData[ArgumentKeys.argumentStaffTotal];
     staffCheckedIn.value = argumentData[ArgumentKeys.argumentCheckIn];
@@ -62,6 +65,7 @@ class AdminStaffController extends GetxController with BaseController {
   @override
   void onReady() {
     getAllRoomList(roleId.value, schoolId.value);
+    // getAllActiveStaff(roleId.value);
     super.onReady();
   }
 
@@ -100,10 +104,25 @@ class AdminStaffController extends GetxController with BaseController {
         .get(
         ApiEndPoints.devBaseUrl,
         '${ApiEndPoints.allRoomStudent}'
-            '?roleId=$roleId&schoolId=$schoolId&classId=$classId')
+            '?roleId=$roleId&schoolId=$schoolId&classId=0')
         .catchError(handleError);
     allStudentList.value = roomSelectedModelFromJson(response);
     log("ALL STUDENTS IN ROOM :${allStudentList.length}");
+    hideLoading();
+    update();
+  }
+
+  void getAllActiveStaff(int schoolId) async {
+    showLoading();
+    var response = await BaseClient()
+        .get(
+        ApiEndPoints.devBaseUrl,
+        '${ApiEndPoints.allActiveStaffList}'
+           '?isActive=true&schoolId=$schoolId&classId=$classId')
+    // http://192.168.1.57:8082/staff/allStaff?classId=0&isActive=true&schoolId=1002939
+        .catchError(handleError);
+    allStaffListNew.value = allStaffListFromJson(response);
+    log("ALL STAFF data :${allStaffListNew.length}");
     hideLoading();
     update();
   }
