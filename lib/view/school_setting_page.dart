@@ -29,7 +29,7 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
             title: Row(
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("School Setting",
+                Text("School Settings",
                   style:  TextStyles.textStyleFW500(AppColor.white, 18)
                       ),
                       InkWell(
@@ -51,7 +51,7 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                  Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             decoration: BoxDecoration(
