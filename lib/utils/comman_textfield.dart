@@ -14,6 +14,8 @@ class CommonTextField extends StatelessWidget {
   // final  Color? borderColor;
   final TextEditingController? controller;
   final Function(String)? onSaved;
+  // final TextInputType keyboardType;
+  final String? Function(String?)? validator;
   // final Color textColor;
   // final Size buttonSize;
   // final VoidCallback onPressed;
@@ -23,11 +25,13 @@ class CommonTextField extends StatelessWidget {
       this.title,
     this.maxLines,
     required this.hintText,
-      // this.borderColor,
     this.controller,
     this.isEmailVerified = false,
     this.suffixImage,
     this.onSaved,
+    // required this.keyboardType,
+    this.validator,
+
     // required this.textColor,
     // required this.buttonSize,
     // required this.titleSize,
@@ -49,6 +53,7 @@ class CommonTextField extends StatelessWidget {
           // },
           maxLines: maxLines,
           controller: controller,
+          validator: validator,
           onChanged: (newText) {
 
           },
@@ -68,5 +73,6 @@ class CommonTextField extends StatelessWidget {
     );
   }
 }
+
 
 

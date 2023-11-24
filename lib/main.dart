@@ -175,6 +175,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
       ),
       initialRoute: AppRoute.splash,
+      //  initialRoute: AppRoute.schoolSetting,
       getPages: [
         GetPage(
             name: AppRoute.splash,
@@ -247,7 +248,7 @@ class MyApp extends StatelessWidget {
             binding: FeesBinding()),
         GetPage(
             name: AppRoute.schoolSetting,
-            page: () => const SchoolSettingPage(),
+            page: () =>  SchoolSettingPage(),
             binding: SchoolSettingBinding()),
         GetPage(
             name: AppRoute.chat,

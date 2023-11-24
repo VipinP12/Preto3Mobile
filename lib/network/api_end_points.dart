@@ -5,6 +5,7 @@ class ApiEndPoints {
   // static const devBaseUrl = "https://api.preto3.com";
   // static const devBaseUrl = "http://192.168.1.80:8082";
   static const devBaseUrl = "http://3.21.186.48:8080/preto3lite";
+  // static const devBaseUrl = "http://192.168.1.57:8082";
   static const clientId = "93750";                                                                
   static const socketUrl = "wss://chat.migration.preto3.com:8080/chat/";
   //static const devBaseUrl = "http://192.168.1.6:8082";

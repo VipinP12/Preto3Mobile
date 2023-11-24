@@ -50,7 +50,7 @@ class AdminProfileController extends GetxController with BaseController{
   @override
   void onReady() async {
 
-    getAdminProfileDetails(schoolId.value);
+   getAdminProfileDetails(schoolId.value);
   }
 
   void getAdminProfileDetails(int schoolId) async {
@@ -63,7 +63,7 @@ class AdminProfileController extends GetxController with BaseController{
       var adminResponse = adminProfileFromJson(response);
       storageBox.write(AppKeys.keyCheckInOutPin,  adminResponse.checkInOutPin);
       storageBox.read(AppKeys.keyCheckInOutPin,);
-      profilePic.value = adminResponse.userProfilePic;
+      profilePic.value = adminResponse.userProfilePic ;
       firstName.value = adminResponse.userFirstName;
       lastName.value = adminResponse.userLastName;
       firstNameController.text = adminResponse.userFirstName;
