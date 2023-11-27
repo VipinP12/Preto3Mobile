@@ -53,6 +53,27 @@ final addressController = TextEditingController();
     selectedEndTimeController.text = getTime(selectedEndTime.value);
   }
 
+Future<void> selectStartTime(BuildContext context) async {
+    TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: selectedStartTime.value,
+    );
+    if (newTime != null) {
+      selectedStartTime.value = newTime;
+      selectedStartTimeController.text = getTime(newTime);
+    }
+  }
+
+  Future<void> selectEndTime(BuildContext context) async {
+    TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: selectedEndTime.value,
+    );
+    if (newTime != null) {
+      selectedEndTime.value = newTime;
+      selectedEndTimeController.text = getTime(newTime);
+    }
+  }
 
 
   // Validation for School Name

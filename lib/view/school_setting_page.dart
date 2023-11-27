@@ -58,8 +58,8 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
                               color: AppColor.totalColor,
                               borderRadius: BorderRadius.circular(5)
                             ),
-                            width: 100,
-                            height: 70,
+                            width: MediaQuery.sizeOf(context).width*0.27,
+                            height: MediaQuery.sizeOf(context).height*0.08,
                             child: Padding(
                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Column(
@@ -75,8 +75,8 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
                               color:AppColor.inColor,
                               borderRadius: BorderRadius.circular(5)
                             ),
-                            width: 100,
-                            height: 70,
+                            width: MediaQuery.sizeOf(context).width*0.27,
+                            height: MediaQuery.sizeOf(context).height*0.08,
                            child: Padding(
                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                              child: Column(
@@ -92,10 +92,9 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
                               color:AppColor.outColor,
                               borderRadius: BorderRadius.circular(5)
                             ),
-                            width: 100,
-                            height: 70,
+                            width: MediaQuery.sizeOf(context).width*0.27,
+                            height: MediaQuery.sizeOf(context).height*0.08,
                            child: Padding(
-                           
                               padding: const EdgeInsets.symmetric(horizontal: 8.0),
                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -112,8 +111,8 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
                       children: [
                    Container(
                              padding: const EdgeInsets.all(10),
-                            width: double.maxFinite,
-                            height: 40,
+                             width: MediaQuery.sizeOf(context).width,
+                             height: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color:AppColor.profileHeaderBG
@@ -140,104 +139,79 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
                                       onSaved: (value) {
                                       },
                                     ),
-                                    
-                                                     const SizedBox(height: 10),
-                                              Column(
-                          children: [
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Operating Start Time",
-                                    style: TextStyles.textStyleFW500(AppColor.heavyTextColor, 14),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                                  const SizedBox(height: 5),
-                                GestureDetector(
-                                  onTap: () async {
-                                    TimeOfDay? newTime = await showTimePicker(
-                                      context: context,
-                                      initialTime: controller.selectedStartTime.value,
-                                    );
-                                    if (newTime != null) {
-                                      
-                                        controller.selectedStartTime.value = newTime;
-                                      
-                               
-                                    }
-                                  },
-                                  child: TextFormField(
-                                    controller: schoolSettingController.selectedStartTimeController,
-                                    enabled: false,
-                                    style: TextStyles.textStyleFW400(AppColor.heavyTextColor, 14),
-                                    decoration: InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.access_time,
-                                        color: AppColor.heavyTextColor,
-                                        size: 18,
-                                      ),
-                                       filled: true,
-                                      fillColor: AppColor.disableColor, 
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10), 
-                                        borderSide: BorderSide.none),
-                                       contentPadding: EdgeInsets.symmetric(vertical: 11, horizontal: 8),
-                                    ),
-                                  ),
-                                ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
+Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    Text(
+      "Operating Start Time",
+       style: TextStyles.textStyleFW500(AppColor.heavyTextColor, 14),
+   
+    ),
+    const SizedBox(height: 5),
+        GestureDetector(
+    
+      onTap: () async { 
+        await schoolSettingController.selectStartTime(context);
+      },
+    child: CommonTextField(
+        hintText: "Select Time",
+        controller: schoolSettingController.selectedStartTimeController,
+        enabled: false,
+        prefixIcon: Icon(
+          Icons.access_time,
+    color: AppColor.heavyTextColor,
+       size: 18,
+        ),
+    
+        contentPadding: EdgeInsets.symmetric(vertical: 11, horizontal: 8),
+         border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10), 
+                                               borderSide: BorderSide.none),
+                                          fillColor:AppColor.disableColor,
+      ),
+    ),
+  ],
+),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
+                                Text(
                                     "Operating End Time",
                                     style: TextStyles.textStyleFW500(AppColor.heavyTextColor, 14),
                                     textAlign: TextAlign.left,
                                   ),
-                                ),
+                                
                                 const SizedBox(height: 5),
                                 GestureDetector(
                                         onTap: () async {
-                                    TimeOfDay? newTime = await showTimePicker(
-                                      context: context,
-                                      initialTime: controller.selectedEndTime.value,
-                                    );
-                                    if (newTime != null) {
-                                    
-                                        controller.selectedEndTime.value = newTime;
-                                      
-                                    
-                                    }
+                                   await schoolSettingController.selectEndTime(context);
                                   },
-                                  child: TextFormField(
-                                    controller: schoolSettingController.selectedEndTimeController,
-                                    enabled: false,
-                                    style:  TextStyles.textStyleFW400(AppColor.heavyTextColor, 14),
-                                    decoration: InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.access_time,
-                                        color: AppColor.heavyTextColor,
-                                        size: 18,
-                                      ),
-                                       filled: true,
-                                      fillColor: AppColor.disableColor, 
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10), 
-                                        borderSide: BorderSide.none ),
-                                          contentPadding: EdgeInsets.symmetric(vertical: 11, horizontal: 8),
-                                      ),
-                                    ),
+                                  child: CommonTextField(
+        hintText: "Select Time",
+        controller: schoolSettingController.selectedEndTimeController,
+        enabled: false,
+        prefixIcon: Icon(
+          Icons.access_time,
+    color: AppColor.heavyTextColor,
+       size: 18,
+        ),
+    
+        contentPadding: EdgeInsets.symmetric(vertical: 11, horizontal: 8),
+         border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(10), 
+                                               borderSide: BorderSide.none),
+                                          fillColor:AppColor.disableColor,
+        
+    
+      ),
                                 ),
                         
                           ],
                         ),
-                        SizedBox(height: 10),
                                     CommonTextField(
                                       title: "EIN/SSN#",
                                       hintText: "Enter EIN/SSN#",
+                                      keyboardType: TextInputType.number,
                                       controller: schoolSettingController.ssnEinController,
                                     validator: (value)=>schoolSettingController.validateSsnEin(value),
                                       onSaved: (value) {
@@ -252,6 +226,7 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
                                       },
                                     ),
                                     CommonTextField(
+                                      keyboardType: TextInputType.number,
                                       title: "Enrollment Capacity",
                                       hintText: "Enter enrollment capacity",
                                       controller: schoolSettingController.enrollmentController,
@@ -321,6 +296,7 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
                         ),
                         
                         CommonTextField(
+                           keyboardType: TextInputType.phone,
                           title: "School Phone Number",
                           hintText: "School Phone Number",
                           controller: schoolSettingController.phoneNumberController,
@@ -344,7 +320,7 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
                              const SizedBox(height: 15),
                               Container(
                                   padding: const EdgeInsets.all(15),
-                                  width: double.maxFinite,
+                              width: MediaQuery.sizeOf(context).width,
                                   decoration: BoxDecoration(
                                     borderRadius:BorderRadius.circular(10),
                                     border: Border.all(width: 0.5,color:AppColor.borderColor),
@@ -359,7 +335,7 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
                                 ),
                             const  SizedBox(height: 15),
                              Container(
-                                  width: double.maxFinite,
+                                  width: MediaQuery.sizeOf(context).width,
                                   padding: const EdgeInsets.all(15),
                                   decoration: BoxDecoration(
                                     borderRadius:BorderRadius.circular(10),
@@ -386,7 +362,6 @@ final SchoolSettingController schoolSettingController = SchoolSettingController(
       }
     );
   }
-
 }
 
 
