@@ -123,6 +123,7 @@ import 'binding/Parent/invoice_details_binding.dart';
 import 'binding/Parent/view_invoice_binding.dart';
 import 'binding/Staff/add_emergency_binding.dart';
 import 'binding/Admin/drawer/event_details_binding.dart';
+import 'controller/Admin/fee_management/fee_management.dart';
 import 'view/CommunicationModule/communcation_page.dart';
 import 'view/StaffModule/staff_dashboard_page.dart';
 import 'view/StaffModule/student_profile_details.dart';
@@ -470,6 +471,11 @@ class MyApp extends StatelessWidget {
             name: AppRoute.addPrimaryParent,
             page: () => const AddPrimaryParent(),
             // binding: AddNewProfileBinding()
+        ),
+        GetPage(
+          name: AppRoute.feesManagement,
+          page: () => const FeeManagement(),
+          // binding: AddNewProfileBinding()
         ),
 
       ],

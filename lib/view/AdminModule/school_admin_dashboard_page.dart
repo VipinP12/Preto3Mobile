@@ -616,7 +616,7 @@ class DashboardPage extends StatelessWidget {
                                 Get.toNamed(AppRoute.communication);
                                 break;
                               case 3:
-                                Get.toNamed(AppRoute.fees);
+                                Get.toNamed(AppRoute.feesManagement);
                                 break;
                               case 4:
                                 Get.toNamed(AppRoute.schoolSetting);
