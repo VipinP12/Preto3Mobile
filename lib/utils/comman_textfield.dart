@@ -57,7 +57,10 @@ this.contentPadding
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (title != null)
-          Text(title!, style:TextStyles.textStyleFW500(AppColor.heavyTextColor, 14)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(title!, style:TextStyles.textStyleFW500(AppColor.heavyTextColor, 14)),
+          ),
         TextFormField(
           // validator: (value) {
           //   return authController.phoneNumberValidator(
