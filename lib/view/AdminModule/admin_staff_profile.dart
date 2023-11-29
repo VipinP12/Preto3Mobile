@@ -6,7 +6,7 @@ import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
 
 import '../../components/rounded_button.dart';
-import '../../controller/Admin/admin_staff_profile.dart';
+import '../../controller/Admin/staff_management/admin_staff_profile.dart';
 import '../../utils/comman_textStyle.dart';
 import '../../utils/comman_textfield.dart';
 
@@ -29,7 +29,7 @@ class _AdminStaffProfileState extends State<AdminStaffProfile> {
           headerSliverBuilder: (BuildContext context, bool isInnerScroll) {
             return [
               SliverAppBar(
-                title: Text("Profile",
+                title: Text("Profile new***",
                   style: GoogleFonts.poppins(
                       color: AppColor.white,
                       fontSize: 18,

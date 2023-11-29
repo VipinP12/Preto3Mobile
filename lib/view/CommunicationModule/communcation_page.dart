@@ -57,14 +57,14 @@ class _CommunicationPageState extends State<CommunicationPage> {
                 color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
           ),
           actions: [
-            // const Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: 4.0),
-            //   child: Icon(
-            //     Icons.search,
-            //     color: Colors.white,
-            //     size: 24,
-            //   ),
-            // ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.0),
+              child: Icon(
+                Icons.search,
+                color: Colors.white,
+                size: 24,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
               child: InkWell(

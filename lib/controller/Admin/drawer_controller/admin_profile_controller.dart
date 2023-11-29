@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../model/admit/admin_profile.dart';
@@ -35,7 +35,10 @@ class AdminProfileController extends GetxController with BaseController{
   var schoolId = 0.obs;
   var checkInCheckOut = ''.obs;
   var profilePic = "".obs;
+  var userAddress = "".obs;
  var isActive =  true.obs;
+
+
   @override
   void onInit() {
     roleId.value = storageBox.read(AppKeys.keyRoleId);
@@ -49,16 +52,22 @@ class AdminProfileController extends GetxController with BaseController{
 
   @override
   void onReady() async {
-
-    getAdminProfileDetails(schoolId.value);
+    await getAdminProfileDetails(schoolId.value);
   }
 
-  void getAdminProfileDetails(int schoolId) async {
+
+  void onSavePressed()  {
+    updateAdminProfileDetail();
+    update();
+  }
+
+  Future<void> getAdminProfileDetails(int schoolId) async {
     var response = await BaseClient()
         .get(ApiEndPoints.devBaseUrl,
         '${ApiEndPoints.adminProfileDetail}' '?schoolId=$schoolId&roleId=2')
         .catchError(handleError);
     log(response);
+    print("hello${response}");
     if (response != null) {
       var adminResponse = adminProfileFromJson(response);
       storageBox.write(AppKeys.keyCheckInOutPin,  adminResponse.checkInOutPin);
@@ -79,24 +88,43 @@ class AdminProfileController extends GetxController with BaseController{
       email.value = adminResponse.userEmail;
       checkInCheckOut.value = adminResponse.checkInOutPin;
       log("vandana ${checkInCheckOut.value}");
-      update();
     }
   }
-  // void setEdit(bool value){
-  //    isActive.value =  value;
-  //    log("edit value$isActive");
-  //    update();
-  // }
-  // void selectDatePicker()async{
-  //   DateTime? datepicker = await showDatePicker(
-  //       context: context,
-  //       initialDate: selectedDate ?? DateTime.now(),
-  //       firstDate: DateTime(1999),
-  //       lastDate:  DateTime(2028));
-  //   if(datepicker!=null && datepicker !=selectedDate){
-  //     setState(() {
-  //       selectedDate = datepicker;
-  //     });
-  //   }
-  // }
+  Future<void> updateAdminProfileDetail() async {
+    showLoading();
+    try {
+      var params = {
+        "schoolId": schoolId.value,
+        "roleId": roleId.value,
+        "userId": 1008491,
+        "userFirstName": firstNameController.text,
+        "userLastName": lastNameController.text,
+        "adminBio": bioController.text,
+        "userPhoneNumber": phoneNumberController.text,
+        "dateOfBirth": dateOfBirthController.text,
+        "userProfilePic": profilePic.value,
+        "userAddress": addressController.text
+      };
+
+      print("request data: $params");
+
+      var response = await BaseClient()
+          .post(ApiEndPoints.devBaseUrl, ApiEndPoints.updateProfileDetail, params);
+      hideLoading();
+      print("response data: $response");
+      if (response != null) {
+        Get.back();
+      } else {
+        print("API not working");
+      }
+    } catch (error) {
+      hideLoading();
+      print("Error: $error");
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

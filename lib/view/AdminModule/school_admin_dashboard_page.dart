@@ -16,11 +16,13 @@ import 'package:preto3/utils/app_string.dart';
 import 'package:preto3/utils/argument_keys.dart';
 
 import '../../components/admin/admin_drawer.dart';
+import '../../controller/Admin/room_management/room_controller.dart';
 
 class DashboardPage extends StatelessWidget {
   DashboardPage({Key? key}) : super(key: key);
 
   final dashboardController = Get.find<DashboardController>();
+  final roomController = Get.find<RoomController>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,18 +48,6 @@ class DashboardPage extends StatelessWidget {
               color: AppColor.white, fontSize: 18, fontWeight: FontWeight.w600),
         ),
         actions: [
-          InkWell(
-            onTap: () {
-              // dashboardController.getAdminDashboard(
-              //     dashboardController.roleId.value,
-              //     dashboardController.schoolId.value,
-              //     dashboardController.isWebRequest);
-            },
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.add),
-            ),
-          ),
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Icon(Icons.qr_code),
@@ -415,7 +405,6 @@ class DashboardPage extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: (){
-                                  // Get.toNamed(AppRoute.adminDashboardStaff);
                                   Get.toNamed(AppRoute.adminDashboardStaff, arguments: {
                                     ArgumentKeys.argumentStaffTotal:dashboardController.staffTotalCount.value,
                                     ArgumentKeys.argumentCheckIn:dashboardController.staffCheckedIn.value,
@@ -705,8 +694,8 @@ class DashboardPage extends StatelessWidget {
                                               .name ==
                                               "Room"
                                               ? Text(
-                                            "${dashboardController.roomCount
-                                                .value.toString()} Rooms",
+                                            "${roomController.allRoomList.length
+                                                 } Rooms",
                                             style: GoogleFonts.poppins(
                                                 color: controller
                                                     .dashboardCategory[

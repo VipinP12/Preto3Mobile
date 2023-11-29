@@ -4,23 +4,23 @@
 
 import 'dart:convert';
 
-List<AllStaffList> allStaffListFromJson(String str) => List<AllStaffList>.from(json.decode(str).map((x) => AllStaffList.fromJson(x)));
+List<AllStaffList?>? allStaffListFromJson(String str) =>json.decode(str) == null ? [] : List<AllStaffList?>.from(json.decode(str)!.map((x) => AllStaffList.fromJson(x)));
 
-String allStaffListToJson(List<AllStaffList> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String allStaffListToJson(List<AllStaffList?>? data) => json.encode(data == null ? [] : List<dynamic>.from(data.map((x) => x!.toJson())));
 
 class AllStaffList {
   int staffId;
   String firstName;
   String lastName;
-  String userName;
-  String profilePic;
+  String? userName;
+  String? profilePic;
   String isSubAdmin;
   String isTeacher;
   String isPunchMaster;
   String isSchoolAdmin;
   List<Room> rooms;
   String emailId;
-  String joiningDate;
+  String? joiningDate;
   dynamic inActiveDate;
   dynamic inActiveReason;
   int certificationCount;
@@ -30,15 +30,15 @@ class AllStaffList {
     required this.staffId,
     required this.firstName,
     required this.lastName,
-    required this.userName,
-    required this.profilePic,
+      this.userName,
+      this.profilePic,
     required this.isSubAdmin,
     required this.isTeacher,
     required this.isPunchMaster,
     required this.isSchoolAdmin,
     required this.rooms,
     required this.emailId,
-    required this.joiningDate,
+      this.joiningDate,
     required this.inActiveDate,
     required this.inActiveReason,
     required this.certificationCount,

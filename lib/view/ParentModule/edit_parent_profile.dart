@@ -32,7 +32,7 @@ class EditParentProfile extends StatelessWidget {
                 expandedHeight: 320,
                 floating: false,
                 pinned: true,
-                /*actions: [
+                actions: [
                   InkWell(
                     onTap: () {
                       parentController.showLoading();
@@ -50,7 +50,7 @@ class EditParentProfile extends StatelessWidget {
                       ),
                     ),
                   )
-                ],*/
+                ],
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
                   background: const Image(

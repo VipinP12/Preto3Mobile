@@ -18,7 +18,7 @@ import 'package:preto3/binding/TimeClock/time_clock_binding.dart';
 import 'package:preto3/binding/create_group_binding.dart';
 import 'package:preto3/binding/daily_activity_binding.dart';
 import 'package:preto3/binding/daily_detail_binding.dart';
-import 'package:preto3/binding/event_binding.dart';
+import 'package:preto3/binding/Admin/drawer/event_binding.dart';
 import 'package:preto3/binding/reset_password_binding.dart';
 import 'package:preto3/binding/scanner_binding.dart';
 import 'package:preto3/components/admin_deshboard_page.dart';
@@ -34,22 +34,23 @@ import 'package:preto3/binding/forgot_password_binding.dart';
 import 'package:preto3/binding/login_binding.dart';
 import 'package:preto3/binding/onboarding_binding.dart';
 import 'package:preto3/binding/Parent/parent_dashboard_binding.dart';
-import 'package:preto3/binding/profile_student_binding.dart';
-import 'package:preto3/binding/room_binding.dart';
-import 'package:preto3/binding/room_selected_binding.dart';
-import 'package:preto3/binding/school_setting_binding.dart';
+import 'package:preto3/binding/Admin/students_management/profile_student_binding.dart';
+import 'package:preto3/binding/Admin/room_management/room_binding.dart';
+import 'package:preto3/binding/Admin/room_management/room_selected_binding.dart';
+import 'package:preto3/binding/Admin/school_management/school_setting_binding.dart';
 import 'package:preto3/binding/select_role_binding.dart';
 import 'package:preto3/binding/sign_up_binding.dart';
 import 'package:preto3/binding/splash_binding.dart';
-import 'package:preto3/binding/student_binding.dart';
+import 'package:preto3/binding/Admin/students_management/student_binding.dart';
 import 'package:preto3/view/AdminModule/add_parent.dart';
 import 'package:preto3/view/AdminModule/admin_staff_profile.dart';
 import 'package:preto3/view/AdminModule/drawer/authorize_pickup_view/authorize_pickup_detail.dart';
 import 'package:preto3/view/AdminModule/drawer/authorize_pickup_view/authorize_pickup_page.dart';
 import 'package:preto3/view/AdminModule/drawer/schedule_view/admin_shedule_page.dart';
-import 'package:preto3/view/AdminModule/edit_admin_profile.dart';
-import 'package:preto3/view/AdminModule/dashboard_staff.dart';
-import 'package:preto3/view/AdminModule/new_student_add.dart';
+import 'package:preto3/view/AdminModule/drawer/edit_admin_profile.dart';
+import 'package:preto3/view/AdminModule/staff_management/staff_detail_page.dart';
+import 'package:preto3/view/AdminModule/staff_management/new_staff_add.dart';
+import 'package:preto3/view/AdminModule/students_management/new_student_add.dart';
 import 'package:preto3/view/CommunicationModule/chat_page.dart';
 import 'package:preto3/view/CommunicationModule/create_group_for_%20both.dart';
 import 'package:preto3/view/CommunicationModule/create_group_for_both_preview.dart';
@@ -90,29 +91,30 @@ import 'package:preto3/view/daily_activities_page.dart';
 import 'package:preto3/view/daily_activity_add_page.dart';
 import 'package:preto3/view/daily_activity_select_student.dart';
 import 'package:preto3/view/daily_activity_set_time.dart';
-import 'package:preto3/view/event_details.dart';
-import 'package:preto3/view/event_page.dart';
+import 'package:preto3/view/AdminModule/drawer/event_view/event_details.dart';
+import 'package:preto3/view/AdminModule/drawer/event_view/event_page.dart';
 import 'package:preto3/view/forgot_password_page.dart';
 import 'package:preto3/view/login_page.dart';
 import 'package:preto3/view/onboarding_page.dart';
-import 'package:preto3/view/profile_student_page.dart';
+import 'package:preto3/view/AdminModule/profile_student_page.dart';
 import 'package:preto3/view/qr_scanner_page.dart';
 import 'package:preto3/view/reset_password_page.dart';
-import 'package:preto3/view/room_page.dart';
-import 'package:preto3/view/room_selected_page.dart';
-import 'package:preto3/view/school_setting_page.dart';
+import 'package:preto3/view/AdminModule/room_management/room_page.dart';
+import 'package:preto3/view/AdminModule/room_management/room_selected_page.dart';
+import 'package:preto3/view/AdminModule/school_setting/school_setting_page.dart';
 import 'package:preto3/view/select_role_page.dart';
 import 'package:preto3/view/sign_up_form_page.dart';
 import 'package:preto3/view/sign_up_page.dart';
 import 'package:preto3/view/sign_up_school_page.dart';
 import 'package:preto3/view/splash_page.dart';
-import 'package:preto3/view/student_detail_page.dart';
+import 'package:preto3/view/AdminModule/students_management/student_detail_page.dart';
 // import 'package:url_launcher/url_launcher.dart';
-import 'binding/Admin/add_new_profile_binding.dart';
-import 'binding/Admin/admin_schedule_binding.dart';
-import 'binding/Admin/admin_staff_profile_binding.dart';
-import 'binding/Admin/authorize_pickup_binding.dart';
-import 'binding/Admin/dashboard_staff_binding.dart';
+import 'binding/Admin/drawer/add_new_profile_binding.dart';
+import 'binding/Admin/staff_management/add_new_staff_profile.dart';
+import 'binding/Admin/drawer/admin_schedule_binding.dart';
+import 'binding/Admin/staff_management/admin_staff_profile_binding.dart';
+import 'binding/Admin/drawer/authorize_pickup_binding.dart';
+import 'binding/Admin/staff_management/dashboard_staff_binding.dart';
 import 'binding/Bank/add_bank_atmcard_binding.dart';
 import 'binding/Bank/bank_card_details_binding.dart';
 import 'binding/Parent/AuthorizePikupBinding/authorize_pickup_create_binding.dart';
@@ -120,7 +122,7 @@ import 'binding/Parent/DrawerScreenBinding/check_in_out_binding.dart';
 import 'binding/Parent/invoice_details_binding.dart';
 import 'binding/Parent/view_invoice_binding.dart';
 import 'binding/Staff/add_emergency_binding.dart';
-import 'binding/event_details_binding.dart';
+import 'binding/Admin/drawer/event_details_binding.dart';
 import 'view/CommunicationModule/communcation_page.dart';
 import 'view/StaffModule/staff_dashboard_page.dart';
 import 'view/StaffModule/student_profile_details.dart';
@@ -456,14 +458,20 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
             name: AppRoute.addStudentsProfile,
-            page: () => const AddStudentsProfile(),
+            page: () =>   AddStudentsProfile(),
             binding: AddNewProfileBinding()
+        ),
+        GetPage(
+            name: AppRoute.addStaffProfile,
+            page: () =>   AddStaffProfile(),
+            binding: AddNewStaffBinding()
         ),
         GetPage(
             name: AppRoute.addPrimaryParent,
             page: () => const AddPrimaryParent(),
             // binding: AddNewProfileBinding()
-        )
+        ),
+
       ],
     );
   }

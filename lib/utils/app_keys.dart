@@ -39,6 +39,7 @@ class AppKeys{
   static const keyCountry="country";
   static const keyState="state";
   static const keyCity="city";
+  static const keyUserId = "user_id";
 
 
 }

@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../controller/Admin/authorize_pickup_controller.dart';
+import '../../../../controller/Admin/drawer_controller/authorize_pickup_controller.dart';
 import '../../../../utils/app_assets.dart';
 import '../../../../utils/app_color.dart';
 import '../../../../utils/app_routes.dart';

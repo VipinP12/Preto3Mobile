@@ -42,7 +42,7 @@ class ApiEndPoints {
   static const login = "/login";
   static const roles = "/user/roles";
   static const schoolSignUp = "/user/school/signUp";
-  static const adminDashboard = "/dashboard/getAdminDashboard";
+  static const adminDashboard = "/dashboard/getCheckInOutRatioDashboard";
   static const staffDashboard = "/dashboard/getStaffDashboard";
   static const parentDashboard = "/dashboard/getParentDashboard";
   static const getBirthday = "/dashboard/getBirthdays";
@@ -103,19 +103,17 @@ class ApiEndPoints {
       "/staff/deleteEmergencyContactDetails";
   static const updateStaffPersonalDetails = "/staff/updateStaffPersonalDetails";
   static const updateStaffContactDetails = "/staff/updateStaffContactDetails";
-  static const updateStaffEmploymentDetails =
-      "/staff/updateStaffEmploymentDetails";
+  static const updateStaffEmploymentDetails = "/staff/updateStaffEmploymentDetails";
   static const userRegisterDeviceInfo = "/user/registerDeviceInfo";
   static const userDeleteDeviceInfo = "/user/deleteDeviceInfo";
   static const downloadInvoice = "/invoice/downloadInvoice";
   static const changePassword = "/user/resetPassword";
   static const uploadDailyActivityFile = "/file/daily-activity/uploadFile";
   static const uploadCommunicationFile = "/file/communication/uploadFile";
-  static const sendPushNotifications =
-      "/openFireCommunication/sendPushNotifications";
+  static const sendPushNotifications = "/openFireCommunication/sendPushNotifications";
   //ADMIN
-  static const allRoomRatio = "/dashboard/getRoomRatioDashboard?schoolId=1002939&isWebRequest=true&timezone=Asia/Calcutta";
+  static const allRoomRatio = "/dashboard/getRoomRatioDashboard";
   static const adminProfileDetail = "/profile/adminProfileDetails";
-  static const allActiveStaffList = "staff/allStaff";
-  // http://192.168.1.57:8082/staff/allStaff?classId=0&isActive=true&schoolId=1002939
+  static const allActiveStaffList = "/staff/allStaff";
+  static const updateProfileDetail = "/profile/updateAdminProfileDetails";
 }
