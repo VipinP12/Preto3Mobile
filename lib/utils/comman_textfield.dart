@@ -11,7 +11,7 @@ class CommonTextField extends StatelessWidget {
   final  int?  maxLines;
   final bool? isEmailVerified;
   final Widget? suffixImage;
-  // final  Color? borderColor;
+  final  Color? borderColor;
   final TextEditingController? controller;
   final Function(String)? onSaved;
   // final Color textColor;
@@ -23,7 +23,7 @@ class CommonTextField extends StatelessWidget {
       this.title,
     this.maxLines,
     required this.hintText,
-      // this.borderColor,
+      this.borderColor,
     this.controller,
     this.isEmailVerified = false,
     this.suffixImage,
@@ -61,6 +61,9 @@ class CommonTextField extends StatelessWidget {
             hintText: hintText,
             filled: true,
             fillColor: Colors.white,
+            enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColor.borderColor,width: 1.5)
+            ),
           ),
         ),
         const SizedBox(height: 20,),

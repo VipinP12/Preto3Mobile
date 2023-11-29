@@ -4,8 +4,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl/intl.dart';
 import 'package:preto3/components/rounded_button.dart';
+import 'package:preto3/model/language_model.dart';
+import 'package:preto3/model/language_model.dart';
+import 'package:preto3/network/api_end_points.dart';
 import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
 import '../../controller/Admin/drawer_controller/admin_profile_controller.dart';
@@ -21,21 +26,8 @@ class EditAdminProfile extends StatefulWidget {
 }
 
 class _EditAdminProfileState extends State<EditAdminProfile> {
-  final adminProfileController = Get.find<AdminProfileController>( );
+  final adminProfileController = Get.put(AdminProfileController());
 
-
-    void selectDatePicker()async{
-      DateTime? datepicker = await showDatePicker(
-          context: context,
-          initialDate: adminProfileController.selectedDate ?? DateTime.now(),
-          firstDate: DateTime(1999),
-          lastDate:  DateTime(2028));
-      if(datepicker!=null && datepicker !=adminProfileController.selectedDate){
-        setState(() {
-          adminProfileController.selectedDate = datepicker;
-        });
-      }
-    }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +50,7 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                   InkWell(
                     onTap: () {
                      // log("edit");
-                     // adminProfileController.setEdit(adminProfileController.isActive.value);
+                     adminProfileController.validateProfile();
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 16.0, top: 16),
@@ -184,22 +176,20 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                         padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
                         child: InkWell(
                           onTap: (){
-                            selectDatePicker();
+                            adminProfileController.selectDatePicker(context);
                              log(adminProfileController.selectedDate != null
-                                ? DateFormat('dd/MM/yyyy').format(adminProfileController.selectedDate!)
+                                ?  adminProfileController.selectedDate.value
                                 : "Enter date");
                           },
                           child:  Row(
                             children: [
                               const Icon(Icons.calendar_month_sharp),
                               const SizedBox(width: 10,),
-                              Text(
-                                adminProfileController.selectedDate != null
-                                  ? DateFormat('dd/MM/yyyy').format(adminProfileController.selectedDate!)
-                                  : adminProfileController.dateOfBirthController.text,
+                              Obx(() => Text(
+                                adminProfileController.selectedDate.value,
                                 // "Enter date",
                                 style: const TextStyle(color: Colors.black),
-                              ),
+                              ),)
                             ],
                           ),
                         ),
@@ -208,6 +198,76 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                     const SizedBox(height: 20,),
                     const Text("Spoken Languages",style: TextStyles.fontSize12),
                     const SizedBox(height: 10,),
+                    adminProfileController.setLangList.isEmpty
+                        ? Container()
+                        : SizedBox(
+                      height: 48,
+                      width: double.maxFinite,
+                      child: GetBuilder<AdminProfileController>(
+                        builder: (controller) => ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount:
+                            controller.setLangList.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    // controller.removeAllergies(
+                                    //     controller
+                                    //         .allergiesList[index]!);
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                        color: AppColor.allergiesBg,
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            5)),
+                                    child: Padding(
+                                        padding: const EdgeInsets
+                                            .symmetric(
+                                            horizontal: 8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment
+                                              .center,
+                                          children: [
+                                            Text(
+                                              controller
+                                                  .setLangList[
+                                              index].name
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  color: AppColor
+                                                      .allergiesText,
+                                                  fontSize: 12,
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .w400),
+                                            ),
+                                            const Padding(
+                                              padding:
+                                              EdgeInsets.only(
+                                                  left: 8.0),
+                                              child: Icon(
+                                                Icons.close,
+                                                size: 18,
+                                                color: AppColor
+                                                    .allergiesText,
+                                              ),
+                                            )
+                                          ],
+                                        )),
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                    ),
                   Container(
                     decoration: BoxDecoration(
                       color: AppColor.disableColor,
@@ -216,25 +276,23 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: DropdownButton<String>(
+                          child: Obx(()=>DropdownButton<LanguageModel>(
                             value: adminProfileController.selectedValue,
-                            items: <String>['Hindi', 'English',]
-                                .map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
+                            items: adminProfileController.allLanguageList
+                                .map((LanguageModel? lang) {
+                              return DropdownMenuItem<LanguageModel>(
+                                value: lang,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                                  child: Text(value),
+                                  child: Text(lang!.name),
                                 ),
                               );
                             }).toList(),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                adminProfileController.selectedValue = newValue!;
-                              });
+                            onChanged: (newValue) {
+                              adminProfileController.setLanguage(newValue!);
                             },
                             isExpanded: true,
-                          ),
+                          )),
                         ),
                       ],
                      ),
@@ -242,9 +300,69 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                       CommonTextField(
                       controller: adminProfileController.bioController,
                       hintText: '---',title: "Bio",),
-                      CommonTextField(
-                      controller: adminProfileController.addressController,
-                      hintText: 'Address',title: "Address",),
+                    GooglePlaceAutoCompleteTextField(
+                      textEditingController: adminProfileController.addressController,
+                      boxDecoration: const BoxDecoration(
+                        border: Border.fromBorderSide(BorderSide.none)
+                      ),
+                      googleAPIKey: ApiEndPoints.googleTimeZoneApiKey,
+                      inputDecoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: AppColor.borderColor)
+                        ),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: AppColor.borderColor)
+                          )
+                      ),
+                      debounceTime: 400,
+                      countries: const ["in", "us"],
+                      isLatLngRequired: false,
+                      getPlaceDetailWithLatLng: (Prediction prediction) {
+                        print("placeDetails ${prediction.lat}");
+                      },
+
+                      itemClick: (Prediction prediction) {
+                        log("ADDRESS SELECTED:${prediction.description}");
+                        log("COUNTRY SELECTED:${prediction.description}");
+                        log("COUNTRY ID:${prediction.id}");
+                        log("PLACE ID:${prediction.placeId}");
+                        adminProfileController.addressController.text = prediction.description ?? "";
+                        adminProfileController.addressController.selection = TextSelection.fromPosition(
+                            TextPosition(offset: prediction.description?.length ?? 0));
+                        final predictedParts = prediction.description!.split(",");
+
+                        if (predictedParts.length >= 3) {
+                          int startIndex = predictedParts.length - 3;
+                          adminProfileController.cityController.text = predictedParts[startIndex].trim();
+                          adminProfileController.stateController.text = predictedParts[startIndex+1].trim();
+                          adminProfileController.countryController.text = predictedParts[startIndex+2].trim();
+                          adminProfileController.addressController.text=prediction.description!.toString();
+                          log("COUNTRY:${adminProfileController.countryController.text}");
+                          log("STATE:${adminProfileController.stateController.text}");
+                          log("CITY:${ adminProfileController.cityController.text}");
+                        }
+                      },
+                      seperatedBuilder: const Divider(),
+                      // OPTIONAL// If you want to customize list view item builder
+                      itemBuilder: (context, index, Prediction prediction) {
+                        return Container(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.location_on),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              Expanded(child: Text(prediction.description??""))
+                            ],
+                          ),
+                        );
+                      },
+
+                      isCrossBtnShown: false,
+
+                      // default 600 ms ,
+                    ),
                       CommonTextField(
                       controller: adminProfileController.countryController,
                       hintText: 'Country',title: "Country",),
@@ -254,47 +372,13 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                       CommonTextField(
                       controller: adminProfileController.cityController,
                       hintText: 'City',title: "City",),
-                    // Visibility(
-                    //   visible: adminProfileController.isActive=false,
-                    //   child: Row(
-                    //     children: [
-                    //       RoundedButton(
-                    //         height: 50,
-                    //         width: MediaQuery.of(context).size.width*0.30,
-                    //         color: AppColor.appPrimary.withOpacity(0.20),
-                    //         onClick: () {
-                    //           // parentController.changePasswordSession(context);
-                    //         },
-                    //         text: 'Cancel',
-                    //         style: GoogleFonts.poppins(
-                    //             color: AppColor.appPrimary,
-                    //             fontSize: 16,
-                    //             fontWeight: FontWeight.w500),
-                    //       ),
-                    //       SizedBox(width: 20,),
-                    //       RoundedButton(
-                    //         height: 50,
-                    //         width: MediaQuery.of(context).size.width*0.30,
-                    //         color: AppColor.appPrimary,
-                    //         onClick: () {
-                    //           // parentController.changePasswordSession(context);
-                    //         },
-                    //         text: 'Save',
-                    //         style: GoogleFonts.poppins(
-                    //             color: AppColor.white,
-                    //             fontSize: 16,
-                    //             fontWeight: FontWeight.w400),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     ExpansionTile(
-                      tilePadding: EdgeInsets.symmetric(horizontal: 10),
-                      title: Text("Change Password", style: TextStyles.fontSize12),
+                      tilePadding: const EdgeInsets.symmetric(horizontal: 10),
+                      title: const Text("Change Password", style: TextStyles.fontSize12),
                       // leading: Icon(Icons.arrow_drop_down),
                       children: [
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         CommonTextField(
                           controller: adminProfileController.oldChangeController,
                           hintText: 'Old Password',

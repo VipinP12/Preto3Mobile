@@ -3,7 +3,7 @@ class ApiEndPoints {
   //static const devBaseUrl = "https://backend-new.preto3.com";
   //prod
   // static const devBaseUrl = "https://api.preto3.com";
-  // static const devBaseUrl = "http://192.168.1.57:8082";
+  // static const devBaseUrl = "http://192.168.1.35:8082";
   static const devBaseUrl = "http://3.21.186.48:8080/preto3lite";
   static const clientId = "93750";                                                                
   static const socketUrl = "wss://chat.migration.preto3.com:8080/chat/";
@@ -11,6 +11,7 @@ class ApiEndPoints {
   static const plaidURL = "https://sandbox.plaid.com";
   static const googlePlacesApiKey = "AIzaSyCAlkHLmhM5ho_uXEctCkG_hflHmDEJgKY";
   static const googleTimeZoneApiKey = "AIzaSyD4gS9zmlzjKj13_pfUvSNKdwATO_9W7lE";
+  static const googleMapAPI = "9a90f533fc25ad471116399854398f1d";
   static const createLinkToken = "/link/token/create";
   //WE PAY STAGING
   static const wePayStagingURL = "https://stage.wepayapi.com/v2";
@@ -42,7 +43,7 @@ class ApiEndPoints {
   static const login = "/login";
   static const roles = "/user/roles";
   static const schoolSignUp = "/user/school/signUp";
-  static const adminDashboard = "/dashboard/getAdminDashboard";
+  static const adminDashboard = "/dashboard/getCheckInOutRatioDashboard";
   static const staffDashboard = "/dashboard/getStaffDashboard";
   static const parentDashboard = "/dashboard/getParentDashboard";
   static const getBirthday = "/dashboard/getBirthdays";
@@ -116,6 +117,7 @@ class ApiEndPoints {
   //ADMIN
   static const allRoomRatio = "/dashboard/getRoomRatioDashboard?schoolId=1002939&isWebRequest=true&timezone=Asia/Calcutta";
   static const adminProfileDetail = "/profile/adminProfileDetails";
+  static const adminUpdateProfileDetail = "/profile/updateAdminProfileDetails";
   static const allActiveStaffList = "staff/allStaff";
   // http://192.168.1.57:8082/staff/allStaff?classId=0&isActive=true&schoolId=1002939
 }

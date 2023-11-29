@@ -53,6 +53,7 @@ class DashboardController extends GetxController with BaseController {
   @override
   void onReady() {
     getAdminDashboard(roleId.value, schoolId.value, isWebRequest);
+
   }
 
   //ADMIN DASHBOARD

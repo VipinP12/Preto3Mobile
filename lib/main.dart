@@ -446,8 +446,7 @@ class MyApp extends StatelessWidget {
             binding: StaffStudentDetailBinding()),
         GetPage(
             name: AppRoute.editAdminProfile,
-            page: () =>   EditAdminProfile(),
-            binding: OnBoardingBinding()
+            page: () =>   const EditAdminProfile(),
         ),
         GetPage(
             name: AppRoute.adminStaffProfile,

@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:preto3/components/rounded_button.dart';
 import 'package:preto3/controller/Admin/dashboard_controller.dart';
+import 'package:preto3/controller/room_controller.dart';
 import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
 import 'package:preto3/utils/app_routes.dart';
@@ -21,6 +22,7 @@ class DashboardPage extends StatelessWidget {
   DashboardPage({Key? key}) : super(key: key);
 
   final dashboardController = Get.find<DashboardController>();
+  final roomController = Get.find<RoomController>();
 
   @override
   Widget build(BuildContext context) {
@@ -705,8 +707,8 @@ class DashboardPage extends StatelessWidget {
                                               .name ==
                                               "Room"
                                               ? Text(
-                                            "${dashboardController.roomCount
-                                                .value.toString()} Rooms",
+                                            "${roomController.allRoomList.value.length
+                                                .toString()} Rooms",
                                             style: GoogleFonts.poppins(
                                                 color: controller
                                                     .dashboardCategory[
