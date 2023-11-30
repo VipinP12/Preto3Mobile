@@ -54,145 +54,217 @@ class RoomPage extends StatelessWidget {
           )
         ],
       ),
-      body: Obx(()=>Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TabBar(
-            tabs: roomController.myTabs,
-            controller: roomController.tabController,
-            labelColor: AppColor.appPrimary,
-            indicatorColor:AppColor.appPrimary,
-            unselectedLabelColor: Colors.grey,
-            indicatorSize: TabBarIndicatorSize.tab,
-          ),
-          Expanded(
-              child: TabBarView(
-                  controller: roomController.tabController,
-                  children: roomController.myTabs
-                      .map(
-                        (Tab tab) => tab.text == AppString.roomList
-                        ? roomController.isError.isTrue
-                            ? Center(child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(AppAssets.errorIcon),
-                            Text(
-                              AppString.errorTitle,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.heavyTextColor,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            Text(
-                              roomController.errorMessage.value,
-                              style: GoogleFonts.poppins(
-                                color: AppColor.mediumTextColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 30,),
-                          ],
-                        ))
-                            : Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 20),
-                        child: GetBuilder(
-                          init: roomController,
-                          builder: ((controller) => ListView.separated(
-                            itemCount: controller.allRoomList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return InkWell(
-                                onTap: () {
-                                  print("hello***************");
-                                  print(roomController.allRoomList[index]!.classId);
-                                  if(controller.roleId.value == 2){
-                                    Get.toNamed(AppRoute.roomSelect,arguments: {
-                                      ArgumentKeys
-                                          .argumentRoleId: controller.roleId.value,
-                                      ArgumentKeys
-                                          .argumentSchoolId: controller
-                                          .schoolId.value,
-                                      ArgumentKeys
-                                          .argumentClassId: roomController.allRoomList[index]!.classId,
-                                    });
-                                  }else{Get.toNamed(AppRoute.roomSelect,arguments: {
-
-                                    ArgumentKeys.argumentRoleId: controller.roleId.value,
-                                    ArgumentKeys.argumentSchoolId: controller
-                                        .schoolId.value,
-                                    ArgumentKeys
-                                        .argumentClassId: roomController.allRoomList[index]!.classId,
-                                  });}
-                                },
-                                child: SizedBox(
-                                  height: MediaQuery.of(context).size.height*0.10,
-                                  width: double.maxFinite,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16.0),
-                                    child: Row(
+      body: Obx(() => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              TabBar(
+                tabs: roomController.myTabs,
+                controller: roomController.tabController,
+                labelColor: AppColor.appPrimary,
+                indicatorColor: AppColor.appPrimary,
+                unselectedLabelColor: Colors.grey,
+                indicatorSize: TabBarIndicatorSize.tab,
+              ),
+              Expanded(
+                  child: TabBarView(
+                      controller: roomController.tabController,
+                      children: roomController.myTabs
+                          .map((Tab tab) => tab.text == AppString.roomList
+                              ? roomController.isError.isTrue
+                                  ? Center(
+                                      child: Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Container(
-                                          height: 42,
-                                          width: 42,
-                                          decoration: BoxDecoration(
-                                              color: roomController.colors[roomController.random.nextInt(4)],
-                                              borderRadius:
-                                              BorderRadius.circular(20)),
-                                          child: Center(child: Text(roomController.allRoomList[index]!.className.toString()[0],style: GoogleFonts.poppins(color: AppColor.white,fontSize: 20,fontWeight: FontWeight.w600),)),
+                                        SvgPicture.asset(AppAssets.errorIcon),
+                                        Text(
+                                          AppString.errorTitle,
+                                          style: GoogleFonts.poppins(
+                                              color: AppColor.heavyTextColor,
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        Text(
+                                          roomController.errorMessage.value,
+                                          style: GoogleFonts.poppins(
+                                            color: AppColor.mediumTextColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          textAlign: TextAlign.center,
                                         ),
                                         const SizedBox(
-                                          width: 8,
+                                          height: 30,
                                         ),
-                                        Flexible(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  roomController.allRoomList[index]!.className.toString(),
-                                                  style: GoogleFonts.poppins(
-                                                      color: AppColor
-                                                          .heavyTextColor,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .w500),
-                                                ),
-                                                const Icon(Icons.arrow_forward_ios)
-                                              ],
-                                            ))
                                       ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const Divider(
-                                color: Colors.grey,
-                                thickness: 0.6,
-                              );
-                            },
-                          )),
-                        )
-                    )
-                            : RoomRatioPage()
-                  ).toList()))
-        ],
-      )),
+                                    ))
+                                  : Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 20),
+                                      child: GetBuilder(
+                                        init: roomController,
+                                        builder: ((controller) =>
+                                            ListView.separated(
+                                              itemCount:
+                                                  controller.allRoomList.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return InkWell(
+                                                  onTap: () {
+                                                        
+
+                                                    if (controller
+                                                            .roleId.value ==
+                                                        2) {
+                                                      Get.toNamed(
+                                                          AppRoute.roomSelect,
+                                                          arguments: {
+                                                            ArgumentKeys
+                                                                    .argumentRoleId:
+                                                                controller
+                                                                    .roleId
+                                                                    .value,
+                                                            ArgumentKeys
+                                                                    .argumentSchoolId:
+                                                                controller
+                                                                    .schoolId
+                                                                    .value,
+                                                            ArgumentKeys
+                                                                    .argumentClassId:
+                                                                roomController
+                                                                    .allRoomList[
+                                                                        index]!
+                                                                    .classId,
+                                                                    ArgumentKeys.argumentClassName:roomController.allRoomList[index]!.className
+                                                          });
+                                                    } else {
+                                                      Get.toNamed(
+                                                          AppRoute.roomSelect,
+                                                          arguments: {
+                                                            ArgumentKeys
+                                                                    .argumentRoleId:
+                                                                controller
+                                                                    .roleId
+                                                                    .value,
+                                                            ArgumentKeys
+                                                                    .argumentSchoolId:
+                                                                controller
+                                                                    .schoolId
+                                                                    .value,
+                                                            ArgumentKeys
+                                                                    .argumentClassId:
+                                                                roomController
+                                                                    .allRoomList[
+                                                                        index]!
+                                                                    .classId,
+                                                                    ArgumentKeys.argumentClassName:roomController.allRoomList[index]!.className
+                                                          });
+                                                    }
+                                                  },
+                                                  child: SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.10,
+                                                    width: double.maxFinite,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 16.0),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Container(
+                                                            height: 42,
+                                                            width: 42,
+                                                            decoration: BoxDecoration(
+                                                                color: roomController
+                                                                        .colors[
+                                                                    roomController
+                                                                        .random
+                                                                        .nextInt(
+                                                                            4)],
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20)),
+                                                            child: Center(
+                                                                child: Text(
+                                                              roomController
+                                                                  .allRoomList[
+                                                                      index]!
+                                                                  .className
+                                                                  .toString()[0],
+                                                              style: GoogleFonts.poppins(
+                                                                  color: AppColor
+                                                                      .white,
+                                                                  fontSize: 20,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600),
+                                                            )),
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 8,
+                                                          ),
+                                                          Flexible(
+                                                              child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                roomController
+                                                                    .allRoomList[
+                                                                        index]!
+                                                                    .className
+                                                                    .toString(),
+                                                                style: GoogleFonts.poppins(
+                                                                    color: AppColor
+                                                                        .heavyTextColor,
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                              ),
+                                                              const Icon(Icons
+                                                                  .arrow_forward_ios)
+                                                            ],
+                                                          ))
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              separatorBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return const Divider(
+                                                  color: Colors.grey,
+                                                  thickness: 0.6,
+                                                );
+                                              },
+                                            )),
+                                      ))
+                              : RoomRatioPage())
+                          .toList()))
+            ],
+          )),
     );
   }
 }

@@ -28,6 +28,9 @@ class AppString{
   static const String messageToParent="Message to Parent";
   static const String selectMembers="Select Members";
   static const String selectStaff="Select Staff";
+  static const String manageCreativeClass="Manage Creative Class";
+  static const String staff = "Staff";
+  
 
   //ERROR AND WARNING
   static const String resultNotFoundTitle="Oops! No Result Found";
@@ -72,7 +75,6 @@ class AppString{
   static const String decline="Decline";
   static const String maybe="Maybe";
 
-  static const String  staff="Staff";
 
 
 }

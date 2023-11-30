@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:preto3/controller/room_controller.dart';
 import 'package:preto3/controller/room_selected_controller.dart';
 import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
 import 'package:preto3/utils/app_routes.dart';
 import 'package:preto3/utils/app_string.dart';
-
-import '../controller/checkin_controller.dart';
+import 'package:preto3/utils/argument_keys.dart';
 
 class RoomSelectedPage extends StatelessWidget {
   RoomSelectedPage({Key? key}) : super(key: key);
 
   final roomSelectedController = Get.find<RoomSelectedController>();
   // final checkInController = Get.find<CheckInController>();
+  final roomController = Get.find<RoomController>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +36,8 @@ class RoomSelectedPage extends StatelessWidget {
           style: GoogleFonts.poppins(
               color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
         ),
-        actions: const [
-          Padding(
+        actions: [
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 4.0),
             child: Icon(
               Icons.search,
@@ -44,12 +45,23 @@ class RoomSelectedPage extends StatelessWidget {
               size: 24,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.0),
-            child: Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 24,
+          InkWell(
+            onTap: () {
+              Get.toNamed(AppRoute.manageCreativeClassSettings, arguments: 
+                {
+                 
+                  ArgumentKeys.argumentClassName:
+                     Get.arguments[ArgumentKeys.argumentClassName]
+                }
+              );
+            },
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.0),
+              child: Icon(
+                Icons.settings,
+                color: Colors.white,
+                size: 24,
+              ),
             ),
           )
         ],
@@ -83,7 +95,8 @@ class RoomSelectedPage extends StatelessWidget {
                                           (BuildContext context, int index) {
                                         return InkWell(
                                           onTap: () {
-                                            Get.toNamed(AppRoute.studentProfile);
+                                            Get.toNamed(
+                                                AppRoute.studentProfile);
                                           },
                                           child: SizedBox(
                                             height: 80,
@@ -104,7 +117,8 @@ class RoomSelectedPage extends StatelessWidget {
                                                         height: 42,
                                                         width: 42,
                                                         decoration: BoxDecoration(
-                                                            color: AppColor.white,
+                                                            color:
+                                                                AppColor.white,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -162,8 +176,12 @@ class RoomSelectedPage extends StatelessWidget {
                                                                 FontWeight
                                                                     .w500),
                                                       ),
-                                                      const Icon(Icons
-                                                          .arrow_forward_ios,color: AppColor.mediumTextColor,size: 16,)
+                                                      const Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: AppColor
+                                                            .mediumTextColor,
+                                                        size: 16,
+                                                      )
                                                     ],
                                                   ))
                                                 ],
@@ -187,8 +205,7 @@ class RoomSelectedPage extends StatelessWidget {
                               child: GetBuilder(
                                 init: roomSelectedController,
                                 builder: ((controller) => ListView.separated(
-                                      itemCount:
-                                          controller.allStaffList.length,
+                                      itemCount: controller.allStaffList.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return InkWell(
@@ -215,15 +232,15 @@ class RoomSelectedPage extends StatelessWidget {
                                                         width: 42,
                                                         decoration: BoxDecoration(
                                                             color:
-                                                            AppColor.white,
+                                                                AppColor.white,
                                                             borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                20)),
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
                                                         child: ClipRRect(
                                                           borderRadius:
-                                                          BorderRadius
-                                                              .circular(20),
+                                                              BorderRadius
+                                                                  .circular(20),
                                                           child: const Image(
                                                             image: AssetImage(
                                                                 AppAssets
@@ -239,7 +256,7 @@ class RoomSelectedPage extends StatelessWidget {
                                                           right: 0,
                                                           bottom: 0,
                                                           child:
-                                                          SvgPicture.asset(
+                                                              SvgPicture.asset(
                                                             AppAssets
                                                                 .activeIcon,
                                                             height: 16,
@@ -259,15 +276,8 @@ class RoomSelectedPage extends StatelessWidget {
                                                         CrossAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Text("${controller
-                                                          .allStaffList[
-                                                      index]!
-                                                          .firstName
-                                                          .toString()} ${controller
-                                                          .allStaffList[
-                                                      index]!
-                                                          .lastName
-                                                          .toString()}",
+                                                      Text(
+                                                        "${controller.allStaffList[index]!.firstName.toString()} ${controller.allStaffList[index]!.lastName.toString()}",
                                                         style: GoogleFonts.poppins(
                                                             color: AppColor
                                                                 .heavyTextColor,

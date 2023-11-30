@@ -43,4 +43,6 @@ class ArgumentKeys {
   static const argumentDailyActivityPic = "activity-pic";
   static const argumentDailyMap = "activity-map";
   static const argumentActivityImgUrls = "argument-activity-map";
+    static const argumentClassName = 'class-name';
+
 }

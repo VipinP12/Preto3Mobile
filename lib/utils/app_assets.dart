@@ -9,6 +9,7 @@ class AppAssets {
   static const comingSonn = "assets/lottie/coming_soon.json";
   static const notFound = "assets/lottie/not_found.json";
   static const searchEmpty = "assets/lottie/search_empty.json";
+  static const hello = "assets/images/app_logo.png";
 
   // IMAGE
   static const appLogo = "assets/images/app_logo.png";

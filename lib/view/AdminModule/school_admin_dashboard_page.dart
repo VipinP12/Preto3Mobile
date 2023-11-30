@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,6 @@ import 'package:preto3/components/nav_drawer.dart';
 import 'package:preto3/utils/app_string.dart';
 import 'package:preto3/utils/argument_keys.dart';
 
-import '../../components/admin/admin_drawer.dart';
 
 class DashboardPage extends StatelessWidget {
   DashboardPage({Key? key}) : super(key: key);

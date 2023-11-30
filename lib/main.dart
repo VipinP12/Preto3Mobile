@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:new_version_plus/new_version_plus.dart';
+import 'package:preto3/binding/Admin/Room/manage_creative_class_settings_binding.dart';
 import 'package:preto3/binding/Parent/AuthorizePikupBinding/authorize_pickup_binding.dart';
 import 'package:preto3/binding/Parent/AuthorizePikupBinding/update_authorize_pickup_binding.dart';
 import 'package:preto3/binding/Parent/parent_student_details_binding.dart';
@@ -42,6 +41,7 @@ import 'package:preto3/binding/select_role_binding.dart';
 import 'package:preto3/binding/sign_up_binding.dart';
 import 'package:preto3/binding/splash_binding.dart';
 import 'package:preto3/binding/student_binding.dart';
+import 'package:preto3/view/AdminModule/Rooms/manage_creative_class_settings.dart';
 import 'package:preto3/view/AdminModule/add_parent.dart';
 import 'package:preto3/view/AdminModule/admin_staff_profile.dart';
 import 'package:preto3/view/AdminModule/drawer/authorize_pickup_view/authorize_pickup_detail.dart';
@@ -167,8 +167,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      GetMaterialApp(
+    return GetMaterialApp(
       title: 'PreTo3',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -219,8 +218,7 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: AppRoute.adminDashboardStaff,
             page: () => AdminDashboardStaff(),
-            binding: AdminDashboardStaffBinding()
-        ),
+            binding: AdminDashboardStaffBinding()),
         GetPage(
             name: AppRoute.room,
             page: () => RoomPage(),
@@ -291,7 +289,7 @@ class MyApp extends StatelessWidget {
             binding: OnBoardingBinding()),
         GetPage(
             name: AppRoute.adminDashboardSoon,
-            page: () =>   AdminDashBoardPage(),
+            page: () => AdminDashBoardPage(),
             binding: OnBoardingBinding()),
         GetPage(
             name: AppRoute.studentDetails,
@@ -400,18 +398,15 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: AppRoute.adminAuthorizePickup,
             page: () => AdminAuthorizePickUp(),
-            binding: AuthorizePickUPBinding()
-        ),
+            binding: AuthorizePickUPBinding()),
         GetPage(
             name: AppRoute.adminSchedule,
             page: () => AdminSchedule(),
-            binding: AdminScheduleBinding()
-        ),
+            binding: AdminScheduleBinding()),
         GetPage(
             name: AppRoute.adminAuthorizePickupDetail,
             page: () => AuthorizePickUpDetail(),
-            binding: AuthorizePickUPBinding()
-        ),
+            binding: AuthorizePickUPBinding()),
         GetPage(
             name: AppRoute.eventDetails,
             page: () => EventDetails(),
@@ -446,23 +441,25 @@ class MyApp extends StatelessWidget {
             binding: StaffStudentDetailBinding()),
         GetPage(
             name: AppRoute.editAdminProfile,
-            page: () =>   EditAdminProfile(),
-            binding: OnBoardingBinding()
-        ),
+            page: () => EditAdminProfile(),
+            binding: OnBoardingBinding()),
         GetPage(
             name: AppRoute.adminStaffProfile,
-            page: () =>   const AdminStaffProfile(),
-            binding: AdminStaffProfileBinding()
-        ),
+            page: () => const AdminStaffProfile(),
+            binding: AdminStaffProfileBinding()),
         GetPage(
             name: AppRoute.addStudentsProfile,
             page: () => const AddStudentsProfile(),
-            binding: AddNewProfileBinding()
+            binding: AddNewProfileBinding()),
+        GetPage(
+          name: AppRoute.addPrimaryParent,
+          page: () => const AddPrimaryParent(),
+          // binding: AddNewProfileBinding()
         ),
         GetPage(
-            name: AppRoute.addPrimaryParent,
-            page: () => const AddPrimaryParent(),
-            // binding: AddNewProfileBinding()
+          name: AppRoute.manageCreativeClassSettings,
+          page: () =>  ManageCreativeClassSettings(),
+           binding: ManageCreativeClassSettingsBinding()
         )
       ],
     );

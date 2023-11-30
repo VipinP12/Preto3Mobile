@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -41,6 +40,7 @@ class RoomController extends GetxController with GetSingleTickerProviderStateMix
 
   final allRoomList =  <RoomListModel?>[].obs;
   final allRoomRatio =  <RoomResponse?>[].obs;
+
 
   @override
   void onInit() {
