@@ -49,13 +49,13 @@ class SelectRoleController extends GetxController with BaseController {
 
   @override
   void onInit() {
-    print("Socket server Connection in select role screen.");
-    SocketServer.instance!
-        .connectToWebSocket(storageBox.read(AppKeys.keyUserName));
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      print(result);
-      checkNetwork();
-    });
+    // print("Socket server Connection in select role screen.");
+    // SocketServer.instance!
+    //     .connectToWebSocket(storageBox.read(AppKeys.keyUserName));
+    // Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+    //   print(result);
+    //   checkNetwork();
+    // });
     super.onInit();
     setDeviceInfo();
   }

@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/parser.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
@@ -127,13 +129,13 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                         const SizedBox(
                           height: 6,
                         ),
-                        Text(
+                        Obx(() => Text(
                           "Check in/out Pin: ${adminProfileController.checkInCheckOut.value}",
                           style: GoogleFonts.poppins(
                               color: AppColor.white,
                               fontSize: 12,
                               fontWeight: FontWeight.w400),
-                        ),
+                        ),)
                       ],
                     ),)
                   ),
@@ -198,105 +200,116 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                     const SizedBox(height: 20,),
                     const Text("Spoken Languages",style: TextStyles.fontSize12),
                     const SizedBox(height: 10,),
-                    adminProfileController.setLangList.isEmpty
-                        ? Container()
-                        : SizedBox(
-                      height: 48,
-                      width: double.maxFinite,
-                      child: GetBuilder<AdminProfileController>(
-                        builder: (controller) => ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount:
-                            controller.setLangList.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    // controller.removeAllergies(
-                                    //     controller
-                                    //         .allergiesList[index]!);
-                                  },
-                                  child: Container(
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                        color: AppColor.allergiesBg,
-                                        borderRadius:
-                                        BorderRadius.circular(
-                                            5)),
-                                    child: Padding(
-                                        padding: const EdgeInsets
-                                            .symmetric(
-                                            horizontal: 8.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment
-                                              .spaceBetween,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment
-                                              .center,
-                                          children: [
-                                            Text(
-                                              controller
-                                                  .setLangList[
-                                              index].name
-                                                  .toString(),
-                                              style: GoogleFonts.poppins(
-                                                  color: AppColor
-                                                      .allergiesText,
-                                                  fontSize: 12,
-                                                  fontWeight:
-                                                  FontWeight
-                                                      .w400),
-                                            ),
-                                            const Padding(
-                                              padding:
-                                              EdgeInsets.only(
-                                                  left: 8.0),
-                                              child: Icon(
-                                                Icons.close,
-                                                size: 18,
-                                                color: AppColor
-                                                    .allergiesText,
-                                              ),
-                                            )
-                                          ],
-                                        )),
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
-                    ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColor.disableColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Obx(()=>DropdownButton<LanguageModel>(
-                            value: adminProfileController.selectedValue,
-                            items: adminProfileController.allLanguageList
-                                .map((LanguageModel? lang) {
-                              return DropdownMenuItem<LanguageModel>(
-                                value: lang,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                                  child: Text(lang!.name),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              adminProfileController.setLanguage(newValue!);
-                            },
-                            isExpanded: true,
-                          )),
+                      Obx(() =>  Container(
+                        decoration: BoxDecoration(
+                          color: AppColor.disableColor,
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      ],
-                     ),
-                  ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: adminProfileController.isDropDown.value==false && adminProfileController.setLangList.isNotEmpty
+                                  ? DropdownButton<LanguageModel>(
+                          value: adminProfileController.language,
+                          items: adminProfileController.allLanguageList
+                              .map((LanguageModel? lang) {
+                            return DropdownMenuItem<LanguageModel>(
+                              value: lang,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(lang!.name),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (newValue) {
+                            adminProfileController.setLanguage(newValue!);
+                            adminProfileController.setDropDown(!adminProfileController.isDropDown.value);
+                          },
+                          underline: const SizedBox.shrink(),
+                          isExpanded: true,
+                          icon: const SizedBox.shrink(),
+                        )
+                                  : SizedBox(
+                                height: 48,
+                                width: double.maxFinite,
+                                child: GetBuilder<AdminProfileController>(
+                                  builder: (controller) => ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount:
+                                      controller.setLangList.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              controller.removeLanguages(
+                                                  controller
+                                                      .setLangList[index].name,controller.setLangList[index].id);
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  color: AppColor.allergiesBg,
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      5)),
+                                              child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 8.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .center,
+                                                    children: [
+                                                      Text(
+                                                        controller
+                                                            .setLangList[
+                                                        index].name
+                                                            .toString(),
+                                                        style: GoogleFonts.poppins(
+                                                            color: AppColor
+                                                                .allergiesText,
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w400),
+                                                      ),
+                                                      const Padding(
+                                                        padding:
+                                                        EdgeInsets.only(
+                                                            left: 8.0),
+                                                        child: Icon(
+                                                          Icons.close,
+                                                          size: 18,
+                                                          color: AppColor
+                                                              .allergiesText,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )),
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                ),
+                              )
+                            ),
+                            InkWell(
+                              onTap: (){
+                                adminProfileController.setDropDown(!adminProfileController.isDropDown.value);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                child: SvgPicture.asset(AppAssets.dropdownIcon),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),),
                       CommonTextField(
                       controller: adminProfileController.bioController,
                       hintText: '---',title: "Bio",),
@@ -379,27 +392,39 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                       // leading: Icon(Icons.arrow_drop_down),
                       children: [
                         const SizedBox(height: 20),
-                        CommonTextField(
-                          controller: adminProfileController.oldChangeController,
-                          hintText: 'Old Password',
-                          title: 'Change Password',
+                        Form(
+                          key: adminProfileController.passwordKey,
+                          child: CommonTextField(
+                            controller: adminProfileController.oldChangeController,
+                            hintText: 'Current Password',
+                            title: 'Current Password',
+                            validator: (p0) => adminProfileController.passwordValidator(p0!),
+                          ),
                         ),
-                        CommonTextField(
-                          controller: adminProfileController.newChangeController,
-                          hintText: 'New Password',
-                          title: 'New Password',
+                        Form(
+                          key: adminProfileController.newPasswordKey,
+                          child: CommonTextField(
+                            controller: adminProfileController.newChangeController,
+                            hintText: 'New Password',
+                            title: 'New Password',
+                            validator: (p0) => adminProfileController.newPasswordValidator(p0!),
+                          ),
                         ),
-                        CommonTextField(
-                          controller: adminProfileController.confirmChangeController,
-                          hintText: 'Confirm Password',
-                          title: 'Confirm Password',
+                        Form(
+                          key: adminProfileController.cPasswordKey,
+                          child: CommonTextField(
+                            controller: adminProfileController.confirmChangeController,
+                            hintText: 'Confirm Password',
+                            title: 'Confirm Password',
+                            validator: (p0) => adminProfileController.cPasswordValidator(p0!),
+                          ),
                         ),
                         RoundedButton(
                           height: 50,
                           width: MediaQuery.of(context).size.width,
                           color: AppColor.appPrimary,
                           onClick: () {
-                            // parentController.changePasswordSession(context);
+                            adminProfileController.changePasswordSession(context);
                           },
                           text: 'Change Password',
                           style: GoogleFonts.poppins(

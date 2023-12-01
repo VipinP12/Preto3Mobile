@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:preto3/model/language_model.dart';
+import 'package:preto3/utils/app_routes.dart';
+import 'package:preto3/utils/toast.dart';
 import '../../../model/admit/admin_profile.dart';
 import '../../../network/api_end_points.dart';
 import '../../../network/base_client.dart';
@@ -14,7 +16,7 @@ import 'package:get/get.dart';
 class AdminProfileController extends GetxController with BaseController {
   final storageBox = GetStorage();
   var selectedDate = "".obs;
-  LanguageModel? selectedValue;
+  LanguageModel? language;
 
   final adminProfileKey = GlobalKey<FormState>();
   var firstNameController = TextEditingController();
@@ -36,13 +38,34 @@ class AdminProfileController extends GetxController with BaseController {
   var roleId = 0.obs;
   var schoolId = 0.obs;
   var userId = 0.obs;
+
   var checkInCheckOut = ''.obs;
   var profilePic = "".obs;
   var isActive = true.obs;
+  var isDropDown = false.obs;
+
+
+  final passwordKey = GlobalKey<FormState>();
+  final newPasswordKey = GlobalKey<FormState>();
+  final cPasswordKey = GlobalKey<FormState>();
+  FocusNode passwordFocusNode = FocusNode();
+  FocusNode newPasswordFocusNode = FocusNode();
+  FocusNode cPasswordFocusNode = FocusNode();
+
+  var isPasswordFocused = false.obs;
+  var isNewPasswordFocused = false.obs;
+  var isConfirmPasswordFocused = false.obs;
+
+  var isPasswordValid = false;
+  var isNewPasswordValid = false;
+  var isCPasswordValid = false;
 
   final allLanguageList = <LanguageModel>[].obs;
   final setLangList = <LanguageModel>[].obs;
-  final langIdList = <int>[].obs;
+  final selectedLanguageIdList = <int?>[].obs;
+  final selectedLanguageList = <String?>[].obs;
+  var langId = 0.obs;
+  var selectedLang = "".obs;
 
   var isEditProfileValid = true.obs;
 
@@ -100,12 +123,21 @@ class AdminProfileController extends GetxController with BaseController {
       dateOfBirthController.text = adminResponse.dateOfBirth;
       selectedDate.value = adminResponse.dateOfBirth;
       bioController.text = adminResponse.adminBio;
-      countryController.text = adminResponse.countryName;
-      stateController.text = adminResponse.stateName;
-      cityController.text = adminResponse.cityName;
+      final predictedParts = adminResponse.userAddress.split(",");
+
+      if (predictedParts.length > 3) {
+        int startIndex = predictedParts.length - 3;
+        cityController.text = predictedParts[startIndex].trim();
+        stateController.text = predictedParts[startIndex+1].trim();
+        countryController.text = predictedParts[startIndex+2].trim();
+        addressController.text=adminResponse.userAddress;
+        log("COUNTRY:${countryController.text}");
+        log("STATE:${stateController.text}");
+        log("CITY:${ cityController.text}");
+      }
       email.value = adminResponse.userEmail;
       checkInCheckOut.value = adminResponse.checkInOutPin;
-      langIdList.value=adminResponse.spokenLanguages;
+      selectedLanguageIdList.value=adminResponse.spokenLanguages;
       log("vandana admin profile ${checkInCheckOut.value}");
       log("LANG admin profile ${adminResponse.spokenLanguagesStr}");
       update();
@@ -124,42 +156,79 @@ class AdminProfileController extends GetxController with BaseController {
       log("ALL LANGUAGE LIST ${allLanguageList.length}");
       for (var element in allLanguageList) {
         log("ALL LANGUAGE ID ${element.id}");
-        for (var langIdElement in langIdList) {
+        for (var langIdElement in selectedLanguageIdList) {
           if(element.id==langIdElement){
             setLanguage(element);
           }
         }
       }
-      selectedValue = allLanguageList.first;
+      language = allLanguageList.first;
       hideLoading();
       update();
     }
   }
 
+  //SET LANGUAGES
   void setLanguage(LanguageModel languageModel){
-    selectedValue = languageModel;
-    langIdList.add(languageModel.id);
-    setLangList.add(languageModel);
+    language = languageModel;
+    langId.value = languageModel.id;
+    selectedLang.value = languageModel.name.toString();
+    addLanguages(selectedLang.value, langId.value);
     update();
   }
-  // void setEdit(bool value){
-  //    isActive.value =  value;
-  //    log("edit value$isActive");
-  //    update();
-  // }
-  // void selectDatePicker()async{
-  //   DateTime? datepicker = await showDatePicker(
-  //       context: context,
-  //       initialDate: selectedDate ?? DateTime.now(),
-  //       firstDate: DateTime(1999),
-  //       lastDate:  DateTime(2028));
-  //   if(datepicker!=null && datepicker !=selectedDate){
-  //     setState(() {
-  //       selectedDate = datepicker;
-  //     });
-  //   }
-  // }
 
+  void addLanguages(String name, int id) {
+    selectedLanguageIdList.add(id);
+    selectedLanguageList.add(name);
+    setLangList.add(LanguageModel(id: id, name: name, code: ""));
+    log("LANGUAGE LENGTH IS ${setLangList.length}");
+    update();
+  }
+
+  void removeLanguages(String name, int id) {
+    selectedLanguageIdList.remove(id);
+    selectedLanguageList.remove(name);
+    setLangList.removeWhere((element) => element.id==id);
+    log("LANGUAGE LENGTH IS ${setLangList.length}");
+    if(setLangList.isNotEmpty){
+      setDropDown(false);
+    }
+    update();
+  }
+
+  void setDropDown(bool drop){
+    isDropDown.value=drop;
+    log("DROP DOWN IS ${isDropDown.value}");
+    update();
+  }
+
+  String? passwordValidator(String value) {
+    if (value.isEmpty) {
+      return 'Please enter correct current/old password';
+    }
+    return null;
+  }
+
+  String? newPasswordValidator(String value) {
+    if (value.isEmpty) {
+      return 'Please enter your password';
+    } else if (!RegExp(
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\d)(?=.*?[!@#\$&*~]).{8,}$')
+        .hasMatch(value)) {
+      return 'Password must contain minimum eight characters, \nat least one uppercase letter, one lowercase letter,\none number and one special character.';
+    }
+    return null;
+  }
+
+  String? cPasswordValidator(String value) {
+    if (value.isEmpty) {
+      return 'Please enter confirm password';
+    } else if (value.isNotEmpty && value != newChangeController.text) {
+      return 'Password mismatched';
+    }
+    return null;
+  }
+  //CHECK IF ALL FIELDS ARE VALIDATED
   void validateProfile() {
     isEditProfileValid.value = adminProfileKey.currentState!.validate();
 
@@ -189,11 +258,12 @@ class AdminProfileController extends GetxController with BaseController {
           bioController.text,
           phoneNumberController.text,
           selectedDate.value,
-          langIdList,
+          selectedLanguageIdList,
           addressController.text,countryController.text,stateController.text,cityController.text,"");
     }
   }
 
+  // CALL UPDATE API
   void updateProfile(
       int schoolId,
       int roleId,
@@ -229,11 +299,50 @@ class AdminProfileController extends GetxController with BaseController {
       if (response != null) {
         isOnline.value = true;
         log("Profile has been updated successfully");
+        Get.back();
         hideLoading();
         update();
       }
     }catch(e){
       log("update exception:${e.toString()}");
     }
+  }
+
+  //CHANGE PASSWORD
+  void changePasswordSession(BuildContext context) {
+    isPasswordValid = passwordKey.currentState!.validate();
+    isNewPasswordValid = newPasswordKey.currentState!.validate();
+    isCPasswordValid = cPasswordKey.currentState!.validate();
+    Get.focusScope!.unfocus();
+    if (isPasswordValid && isCPasswordValid) {
+      passwordKey.currentState!.save();
+      cPasswordKey.currentState!.save();
+      log("OLD PASSWORD SAVE ${oldChangeController.text}");
+      log("NEW PASSWORD SAVE ${newChangeController.text}");
+      log("CONFIRM PASSWORD SAVE ${confirmChangeController.text}");
+      changePasswordAPICall(oldChangeController.text,confirmChangeController.text,context);
+    }
+  }
+
+  void changePasswordAPICall(
+      String currentPassword, String newPassword, BuildContext context) async {
+    var param = {
+      "currentPassword": currentPassword,
+      "newPassword": newPassword
+    };
+    showLoading();
+    print("PASSWORD PARAM ==>$param");
+    var response = await BaseClient()
+        .patch(ApiEndPoints.devBaseUrl, ApiEndPoints.changePassword, param)
+        .catchError(handleError);
+    if (response != null) {
+      print("RESPONSE CHANGED PASSWORD :${response.toString()}");
+      hideLoading();
+      messageToastSuccess(context, "", "Password Changed Successfully");
+      Get.offAllNamed(AppRoute.login);
+    } else {
+      isError.value = false;
+    }
+    update();
   }
 }

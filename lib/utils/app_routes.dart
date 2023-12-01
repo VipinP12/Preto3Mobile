@@ -71,6 +71,7 @@ class AppRoute {
   static const adminSchedule ="/admin-schedule";
   static const adminAuthorizePickupDetail ="/admin-authorize-pickup-detail";
   static const addPrimaryParent = "/add-primary-parent";
+  static const adminAddEvent = "/admin-add-event";
 
   //PARENT
   static const dashboardParent = "/dashboard-parent";

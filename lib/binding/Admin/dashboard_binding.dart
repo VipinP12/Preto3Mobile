@@ -8,6 +8,7 @@ class DashboardBinding extends Bindings{
   @override
   void dependencies() {
     Get.put(DashboardController());
+    Get.put(AdminProfileController());
     Get.put(RoomController());
   }
 

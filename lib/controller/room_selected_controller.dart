@@ -77,7 +77,7 @@ class RoomSelectedController extends GetxController
     var response = await BaseClient()
         .get(
             ApiEndPoints.devBaseUrl,
-            '${ApiEndPoints.allRoomStudent}'
+            '${ApiEndPoints.checkList}'
             '?roleId=$roleId&schoolId=$schoolId&classId=$classId')
             // '?roleId=2&schoolId=1002939&classId=1002350')
         .catchError(handleError);

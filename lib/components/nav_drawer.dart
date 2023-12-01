@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:preto3/controller/Admin/dashboard_controller.dart';
+import 'package:preto3/controller/Admin/drawer_controller/admin_profile_controller.dart';
 import 'package:preto3/network/socket_server.dart';
 import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
@@ -73,6 +74,8 @@ class NavDrawer extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: (){
+                                Get.put(AdminProfileController());
+                                Get.back();
                                 Get.toNamed(AppRoute.editAdminProfile);
                               },
                               child: Column(

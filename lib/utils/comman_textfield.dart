@@ -14,6 +14,7 @@ class CommonTextField extends StatelessWidget {
   final  Color? borderColor;
   final TextEditingController? controller;
   final Function(String)? onSaved;
+  final String? Function(String?)? validator;
   // final Color textColor;
   // final Size buttonSize;
   // final VoidCallback onPressed;
@@ -28,6 +29,7 @@ class CommonTextField extends StatelessWidget {
     this.isEmailVerified = false,
     this.suffixImage,
     this.onSaved,
+    this.validator,
     // required this.textColor,
     // required this.buttonSize,
     // required this.titleSize,
@@ -43,10 +45,7 @@ class CommonTextField extends StatelessWidget {
         if (title != null)
           Text(title!, style:TextStyles.textStyleFW500(AppColor.heavyTextColor, 14)),
         TextFormField(
-          // validator: (value) {
-          //   return authController.phoneNumberValidator(
-          //       value.toString(), context);
-          // },
+          validator: validator,
           maxLines: maxLines,
           controller: controller,
           onChanged: (newText) {
@@ -56,6 +55,9 @@ class CommonTextField extends StatelessWidget {
             if (onSaved != null) {
             onSaved!(newValue!);
             }},
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.next,
+          onEditingComplete: () => FocusScope.of(context).nextFocus(),
           decoration: InputDecoration(
             suffixIcon:  suffixImage,
             hintText: hintText,

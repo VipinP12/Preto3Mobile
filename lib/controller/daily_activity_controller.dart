@@ -84,10 +84,6 @@ class DailyActivityController extends GetxController with BaseController {
     schoolId.value = storageBox.read(AppKeys.keySchoolId);
     nowDate.value = DateFormat('MM/dd/yyyy').format(currentDate).toString();
     refreshController = RefreshController(initialRefresh: false);
-    log("CURRENT DATE $currentDate");
-    log("now DATE ${nowDate.value}");
-    log("ROLE ID ${roleId.value}");
-    log("SCHOOL ID ${schoolId.value}");
     selectedAddStartDate.value = DateFormat('MM/dd/yyyy').format(currentDate);
     super.onInit();
   }
@@ -95,7 +91,7 @@ class DailyActivityController extends GetxController with BaseController {
   @override
   void onReady() {
     super.onReady();
-    if (roleId.value == 3) {
+    if (roleId.value == 3||roleId.value == 2) {
       getAllRoomList(roleId.value, schoolId.value);
       getAllStudent(roleId.value, schoolId.value);
       getAllActivityBySchool(schoolId.value, roleId.value);

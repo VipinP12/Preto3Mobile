@@ -37,6 +37,23 @@ class EventPage extends StatelessWidget {
               color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
         ),
         actions: [
+          eventController.roleId.value == 2
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 0.0),
+                  child: InkWell(
+                    onTap: () {
+                      // _bottomFilterDateSheet(context);
+                      Get.toNamed(AppRoute.adminAddEvent);
+                    },
+                    child: SvgPicture.asset(
+                      AppAssets.addIcon,
+                      height: 24,
+                      width: 24,
+                      fit: BoxFit.scaleDown,
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: InkWell(
@@ -60,8 +77,7 @@ class EventPage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Obx(() =>
-                          Row(
+                      child: Obx(() => Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -115,8 +131,7 @@ class EventPage extends StatelessWidget {
                                       ),
                                     ),
                             ],
-                          )
-                      ),
+                          )),
                     ),
                   ],
                 ),
@@ -145,8 +160,7 @@ class EventPage extends StatelessWidget {
                     ),
                   ],
                 )
-              :
-          SingleChildScrollView(
+              : SingleChildScrollView(
                   child: GetBuilder<EventController>(
                     builder: (controller) => Padding(
                       padding: const EdgeInsets.symmetric(
@@ -173,21 +187,21 @@ class EventPage extends StatelessWidget {
                                   ],
                                 )
                               : Container(),
-                          eventController.upcommingEvent.value.isNotEmpty
+                          eventController.upcomingEvent.value.isNotEmpty
                               ? Column(
                                   children: [
                                     _getGroupSeparator("Upcoming Events"),
                                     ListView.builder(
                                       shrinkWrap: true,
                                       itemCount: eventController
-                                          .upcommingEvent.value.length,
+                                          .upcomingEvent.value.length,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       padding:
                                           const EdgeInsets.only(bottom: 10),
                                       itemBuilder: (context, element) {
                                         return listEvent(eventController
-                                            .upcommingEvent.value[element]);
+                                            .upcomingEvent.value[element]);
                                       },
                                     ),
                                   ],
@@ -514,8 +528,7 @@ class EventPage extends StatelessWidget {
                           child: SvgPicture.asset(AppAssets.closeFilterIcon)),
                     )
                   ],
-                ))
-            );
+                )));
           });
         });
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -33,7 +35,7 @@ class EventController extends GetxController with BaseController {
   var filteredEndDate = "".obs;
   var fromDate = 0.obs;
   var toDate = 0.obs;
-  var upcommingEvent = <AllEventModel>[].obs;
+  var upcomingEvent = <AllEventModel>[].obs;
   var pastEvent = <AllEventModel>[].obs;
   var ongoingEvent = <AllEventModel>[].obs;
   @override
@@ -47,6 +49,7 @@ class EventController extends GetxController with BaseController {
     DateTime tempEndDate =
         DateTime(currentDate.year, currentDate.month, currentDate.day, 23, 59);
     toDate.value = tempEndDate.millisecondsSinceEpoch;
+    log("EVENT ROLE ID:${roleId.value}");
     super.onInit();
   }
 
@@ -152,7 +155,7 @@ class EventController extends GetxController with BaseController {
     if (response != null && response != "") {
       var eventResponse = allEventModelFromJson(response);
       pastEvent.value = [];
-      upcommingEvent.value = [];
+      upcomingEvent.value = [];
       ongoingEvent.value = [];
       print("FILTER NEXT DATE:${eventResponse.length}");
       if (eventResponse.isNotEmpty) {
@@ -175,7 +178,7 @@ class EventController extends GetxController with BaseController {
           if (flag == "Past Events") {
             pastEvent.add(element);
           } else if (flag == "Upcoming Events") {
-            upcommingEvent.add(element);
+            upcomingEvent.add(element);
           } else {
             ongoingEvent.add(element);
           }
@@ -206,7 +209,7 @@ class EventController extends GetxController with BaseController {
       var eventResponse = allEventModelFromJson(response);
       print("FILTER PREVIOUS DATE:${eventResponse.length}");
       pastEvent.value = [];
-      upcommingEvent.value = [];
+      upcomingEvent.value = [];
       ongoingEvent.value = [];
 
       if (eventResponse.isNotEmpty) {
@@ -229,7 +232,7 @@ class EventController extends GetxController with BaseController {
           if (flag == "Past Events") {
             pastEvent.value.add(element);
           } else if (flag == "Upcoming Events") {
-            upcommingEvent.value.add(element);
+            upcomingEvent.value.add(element);
           } else {
             ongoingEvent.value.add(element);
           }
@@ -259,7 +262,7 @@ class EventController extends GetxController with BaseController {
         .catchError(handleError);
     if (response != null && response != "") {
       pastEvent.value = [];
-      upcommingEvent.value = [];
+      upcomingEvent.value = [];
       ongoingEvent.value = [];
 
       var eventResponse = allEventModelFromJson(response);
@@ -283,7 +286,7 @@ class EventController extends GetxController with BaseController {
           if (flag == "Past Events") {
             pastEvent.value.add(element);
           } else if (flag == "Upcoming Events") {
-            upcommingEvent.value.add(element);
+            upcomingEvent.value.add(element);
           } else {
             ongoingEvent.value.add(element);
           }
