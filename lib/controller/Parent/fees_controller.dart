@@ -128,7 +128,7 @@ class FeesController extends GetxController with BaseController {
     if (response != null) {
       isOnline.value = true;
       var dashResponse =
-          ChildernFeesInvoiceModel.fromJson(jsonDecode(response.toString()));
+          ChildernFeesInvoiceModel.fromJson(jsonDecode(response));
       totalBalanceDues.value = dashResponse.totalBalanceDues;
       upcomingDues.value = dashResponse.upcomingDues;
       pastDues.value = dashResponse.pastDues;
