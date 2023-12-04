@@ -43,7 +43,7 @@ class StaffNavDrawer extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
-                    margin: const EdgeInsets.only(top: 50),
+                    margin: const EdgeInsets.only(top: 40),
                     child: InkWell(
                       onTap: () {
                         log("GO TO PROFILE");
@@ -132,10 +132,10 @@ class StaffNavDrawer extends StatelessWidget {
                           InkWell(
                             onTap: () {
                               dashboardController.closeDrawer();
-                              Get.toNamed(AppRoute.staffDetails);
-                              // Get.toNamed(AppRoute.editStaffProfile);
+                              // Get.toNamed(AppRoute.staffDetails);
+                              Get.toNamed(AppRoute.editStaffProfile);
                             },
-                            child: Text("View Profile",
+                            child: Text("Edit Profile",
                                 style: GoogleFonts.poppins(
                                     color: AppColor.editProfile,
                                     fontSize: 14,
@@ -152,7 +152,7 @@ class StaffNavDrawer extends StatelessWidget {
                 thickness: 1,
               ),
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: Column(
                   children: [
                     // InkWell(

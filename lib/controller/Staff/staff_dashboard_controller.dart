@@ -93,6 +93,7 @@ class StaffDashboardController extends GetxController with BaseController {
   var isPhoneValid = false;
   var isPostalCodeValid = false;
   var isAddressValid = false;
+  var enableEditProfile = false.obs;
 
   var qrCode = "".obs;
 
@@ -152,15 +153,16 @@ class StaffDashboardController extends GetxController with BaseController {
     passwordController = TextEditingController();
     newPasswordController = TextEditingController();
     cPasswordController = TextEditingController();
+    getLanguages();
     super.onInit();
   }
 
   @override
   void onReady() async {
+
     getStaffDashboard(schoolId.value);
     getStaffDetails(userId.value, schoolId.value);
     getQrCode(schoolId.value, roleId.value);
-
     Future.delayed(const Duration(seconds: 30), () {
       UpdateAlert.updateAlertBox();
     });
@@ -379,6 +381,8 @@ class StaffDashboardController extends GetxController with BaseController {
       lastName.value = dashResponse.staffLastName;
       eventCount.value = dashResponse.eventCount;
       staffRoomList.value = dashResponse.roomDetails;
+      storageBox.write(AppKeys.keyParentProfileURL, dashResponse.profilePic);
+      storageBox.write(AppKeys.keyCheckInOutPin, dashResponse.checkInOutPin);
       if (dashResponse.staffCheckInoutdata.inTime != "-") {
         inTime.value = dashResponse.staffCheckInoutdata.inTime;
         formattedInTime.value = DateFormat('hh:mm a')
@@ -391,8 +395,6 @@ class StaffDashboardController extends GetxController with BaseController {
             .format(DateTime.fromMillisecondsSinceEpoch(outTime.value))
             .toString();
         totalHour.value = dashResponse.staffCheckInoutdata.totalHour;
-        storageBox.write(AppKeys.keyParentProfileURL, dashResponse.profilePic);
-        storageBox.write(AppKeys.keyCheckInOutPin, dashResponse.checkInOutPin);
       }
       hideLoading();
       update();
@@ -423,21 +425,13 @@ class StaffDashboardController extends GetxController with BaseController {
             staffResponse.staffContactDetails.addressLine.isNotEmpty
                 ? staffResponse.staffContactDetails.addressLine
                 : "";
-        countryController.text =
-            staffResponse.staffContactDetails.country.isNotEmpty
-                ? staffResponse.staffContactDetails.country
-                : storageBox.read(AppKeys.keyCountry);
+        countryController.text =staffResponse.staffContactDetails.country;
         stateController.text =
-            staffResponse.staffContactDetails.state.isNotEmpty
-                ? staffResponse.staffContactDetails.state
-                : storageBox.read(AppKeys.keyState);
-        cityController.text = staffResponse.staffContactDetails.city.isNotEmpty
-            ? staffResponse.staffContactDetails.city
-            : storageBox.read(AppKeys.keyCity);
-        if (staffResponse.staffEmploymentDetails.hireDate != 0) {
-          var date = DateTime.fromMicrosecondsSinceEpoch(
-              staffResponse.staffEmploymentDetails.hireDate * 1000);
-          joiningDate.value = DateFormat('MM/dd/yyyy').format(date).toString();
+            staffResponse.staffContactDetails.state;
+        cityController.text = staffResponse.staffContactDetails.city;
+        if (staffResponse.staffEmploymentDetails.hireDate.isNotEmpty) {
+
+          joiningDate.value =staffResponse.staffEmploymentDetails.hireDate.toString();
         } else {
           joiningDate.value = "-";
         }
@@ -529,6 +523,11 @@ class StaffDashboardController extends GetxController with BaseController {
     }
   }
 
+  void setEditProfile(bool edit){
+    enableEditProfile.value=edit;
+    log("EDIT PROFILE IS ENABLE:${enableEditProfile.value}");
+    update();
+  }
   Future<List<Prediction>> searchPlaces(
       BuildContext context, String queryText) async {
     print("QUERY TEXT:$queryText");

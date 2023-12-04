@@ -63,7 +63,7 @@ class DashboardController extends GetxController with BaseController {
 
   @override
   void onReady() {
-    // getAdminDashboard(roleId.value, schoolId.value, isWebRequest);
+    getAdminDashboard(roleId.value, schoolId.value, isWebRequest);
     Get.find<DailyActivityController>()
         .getAllActivity(schoolId.value, roleId.value);
 

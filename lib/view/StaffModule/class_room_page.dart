@@ -14,7 +14,7 @@ import 'package:preto3/utils/argument_keys.dart';
 class ClassRoomPage extends StatelessWidget {
   ClassRoomPage({Key? key}) : super(key: key);
 
-  final classController = Get.find<ClassRoomController>();
+  final classController = Get.put(ClassRoomController());
 
   @override
   Widget build(BuildContext context) {

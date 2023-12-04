@@ -3,8 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:preto3/controller/room_selected_controller.dart';
+import 'package:preto3/model/admit/room_student_model.dart';
 import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
+import 'package:preto3/utils/app_keys.dart';
 import 'package:preto3/utils/app_routes.dart';
 import 'package:preto3/utils/app_string.dart';
 
@@ -83,6 +85,7 @@ class RoomSelectedPage extends StatelessWidget {
                                           (BuildContext context, int index) {
                                         return InkWell(
                                           onTap: () {
+                                            controller.storageBox.write(AppKeys.keyId, controller.allStudentList[index].id);
                                             Get.toNamed(AppRoute.studentProfile);
                                           },
                                           child: SizedBox(
@@ -127,10 +130,19 @@ class RoomSelectedPage extends StatelessWidget {
                                                           left: 26,
                                                           right: 0,
                                                           bottom: 0,
-                                                          child:
-                                                              SvgPicture.asset(
+                                                          child: controller.allStudentList[index].status==Status.CHECKED_IN?SvgPicture.asset(
                                                             AppAssets
                                                                 .activeIcon,
+                                                            height: 16,
+                                                            width: 16,
+                                                          ):controller.allStudentList[index].status==Status.CHECKED_OUT?SvgPicture.asset(
+                                                            AppAssets
+                                                                .inActiveIcon,
+                                                            height: 16,
+                                                            width: 16,
+                                                          ):SvgPicture.asset(
+                                                            AppAssets
+                                                                .absentIcon,
                                                             height: 16,
                                                             width: 16,
                                                           ))
@@ -149,11 +161,15 @@ class RoomSelectedPage extends StatelessWidget {
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        controller
+                                                        "${controller
                                                             .allStudentList[
-                                                                index]!
-                                                            .studentFullName
-                                                            .toString(),
+                                                        index]
+                                                            .firstName
+                                                            .toString() } ${controller
+                                                            .allStudentList[
+                                                        index]
+                                                            .lastName
+                                                            .toString() }" ,
                                                         style: GoogleFonts.poppins(
                                                             color: AppColor
                                                                 .heavyTextColor,

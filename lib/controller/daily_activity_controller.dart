@@ -213,7 +213,7 @@ class DailyActivityController extends GetxController with BaseController {
         .get(
             ApiEndPoints.devBaseUrl,
             '${ApiEndPoints.allRoomStudent}'
-            '?roomId=$roomId&roleId=$roleId&schoolId=$schoolId')
+            '?classId=$roomId&roleId=$roleId&schoolId=$schoolId')
         .catchError(handleError);
     log("STUDENTS RESPONSE==>${response.toString()}");
     if (response != null && response != "") {

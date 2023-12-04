@@ -156,9 +156,11 @@ class AdminProfileController extends GetxController with BaseController {
       log("ALL LANGUAGE LIST ${allLanguageList.length}");
       for (var element in allLanguageList) {
         log("ALL LANGUAGE ID ${element.id}");
-        for (var langIdElement in selectedLanguageIdList) {
-          if(element.id==langIdElement){
-            setLanguage(element);
+        if(selectedLanguageList.isNotEmpty){
+          for (var langIdElement in selectedLanguageIdList) {
+            if(element.id==langIdElement){
+              setLanguage(element);
+            }
           }
         }
       }

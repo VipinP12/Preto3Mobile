@@ -115,7 +115,7 @@ class ApiEndPoints {
   static const sendPushNotifications =
       "/openFireCommunication/sendPushNotifications";
   //ADMIN
-  static const allRoomRatio = "/dashboard/getRoomRatioDashboard?schoolId=1002939&isWebRequest=true&timezone=Asia/Calcutta";
+  static const allRoomRatio = "/dashboard/getRoomRatioDashboard";
   static const adminProfileDetail = "/profile/adminProfileDetails";
   static const adminUpdateProfileDetail = "/profile/updateAdminProfileDetails";
   static const allActiveStaffList = "staff/allStaff";
