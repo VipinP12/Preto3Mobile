@@ -36,10 +36,10 @@ class ChildernFeesInvoiceModel {
         upcomingDues: double.parse((json["upcomingDues"] ?? "0.00").toString()),
         pastDues: double.parse((json["pastDues"] ?? "0.00").toString()),
         totalpaid: double.parse((json["totalpaid"] ?? "0.00").toString()),
-        allChildren: List<AllChild>.from(
-            json["allChildren"].map((x) => AllChild.fromJson(x))),
-        invoices: List<Invoice>.from(
-            json["invoices"].map((x) => Invoice.fromJson(x))),
+        allChildren: json["allChildren"]!=null?List<AllChild>.from(
+            json["allChildren"].map((x) => AllChild.fromJson(x))):[],
+        invoices: json["invoices"]!=null?List<Invoice>.from(
+            json["invoices"].map((x) => Invoice.fromJson(x))):[],
       );
 
   Map<String, dynamic> toJson() => {

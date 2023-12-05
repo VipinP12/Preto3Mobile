@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:preto3/controller/Admin/dashboard_controller.dart';
+import 'package:preto3/controller/Admin/drawer_controller/admin_profile_controller.dart';
 import 'package:preto3/network/socket_server.dart';
 import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
@@ -40,80 +41,79 @@ class NavDrawer extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 10),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 75,
-                                width: 75,
-                                decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(35),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(35),
-                                  child: const Image(
-                                    height: 75,
-                                    width: 75,
-                                    image: AssetImage(
-                                      AppAssets.profile,
-                                    ),
-                                    fit: BoxFit.cover,
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 75,
+                              width: 75,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(35),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(35),
+                                child: const Image(
+                                  height: 75,
+                                  width: 75,
+                                  image: AssetImage(
+                                    AppAssets.profile,
                                   ),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              InkWell(
-                                onTap: (){
-                                  Get.toNamed(AppRoute.editAdminProfile);
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      // "${dashboardController.firstName.value} ${dashboardController.lastName.value}",
-                                      "${dashboardController.storageBox.read(AppKeys.keyFirstName)} ${dashboardController.storageBox.read(AppKeys.keyLastName)}",
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            InkWell(
+                              onTap: (){
+                                Get.put(AdminProfileController());
+                                Get.back();
+                                Get.toNamed(AppRoute.editAdminProfile);
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${dashboardController.firstName.value} ${dashboardController.lastName.value}",
+                                    style: GoogleFonts.poppins(
+                                        color: AppColor.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Text(
+                                      "Admin : ${dashboardController.storageBox.read(AppKeys.keyCheckInOutPin) ?? "null"}",
                                       style: GoogleFonts.poppins(
-                                          color: AppColor.black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Text(
-                                        "Admin : ${dashboardController.storageBox.read(AppKeys.keyCheckInOutPin) ?? "null"}",
-                                        style: GoogleFonts.poppins(
-                                            color: AppColor.heavyTextColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400)),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          InkWell(
-                            onTap: (){
-                              // Get.toNamed(AppRoute.editAdminProfile);
-                            },
-                            child: Text("Profile",
-                                style: GoogleFonts.poppins(
-                                    color: AppColor.heavyTextColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400)),
-                          )
-                        ],
-                      ),
+                                          color: AppColor.heavyTextColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400)),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        InkWell(
+                          onTap: (){
+                            // Get.toNamed(AppRoute.editAdminProfile);
+                          },
+                          child: Text("Profile",
+                              style: GoogleFonts.poppins(
+                                  color: AppColor.heavyTextColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400)),
+                        )
+                      ],
                     ),
                   ),
                 ),

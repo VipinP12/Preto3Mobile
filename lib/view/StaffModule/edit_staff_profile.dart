@@ -199,6 +199,7 @@ class EditStaffProfile extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.w400),
                   onEditingComplete: () => FocusScope.of(context).unfocus(),
+                  enabled: staffController.enableEditProfile.value,
                   decoration: InputDecoration(
                     hintText: "first name",
                     helperStyle: GoogleFonts.poppins(
@@ -402,6 +403,7 @@ class EditStaffProfile extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: InkWell(
                                     onTap: () {
+                                      controller.removeLanguages(element.languageName, element.languageId);
                                       // controller.languageList(
                                       //     controller.languageList[index]!);
                                     },
@@ -1091,7 +1093,7 @@ class EditStaffProfile extends StatelessWidget {
                           padding: const EdgeInsets.all(16.0),
                           child: InkWell(
                             onTap: () {
-                              Get.to(AppRoute.addEmergency);
+                              Get.toNamed(AppRoute.addEmergency);
                             },
                             child: Column(
                               children: [

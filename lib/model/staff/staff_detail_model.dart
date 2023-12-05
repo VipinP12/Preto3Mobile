@@ -22,7 +22,7 @@ class StaffDetailModel {
   StaffContactDetails staffContactDetails;
   StaffEmploymentDetails staffEmploymentDetails;
   List<StaffEmergencyContactDetail> staffEmergencyContactDetails;
-  StaffScheduleDetails staffScheduleDetails;
+  List<StaffScheduleDetail> staffScheduleDetails;
   List<StaffQualification> staffQualifications;
 
   factory StaffDetailModel.fromJson(Map<String, dynamic> json) => StaffDetailModel(
@@ -30,7 +30,7 @@ class StaffDetailModel {
     staffContactDetails: StaffContactDetails.fromJson(json["staffContactDetails"]),
     staffEmploymentDetails: StaffEmploymentDetails.fromJson(json["staffEmploymentDetails"]),
     staffEmergencyContactDetails: List<StaffEmergencyContactDetail>.from(json["staffEmergencyContactDetails"].map((x) => StaffEmergencyContactDetail.fromJson(x))),
-    staffScheduleDetails: StaffScheduleDetails.fromJson(json["staffScheduleDetails"]),
+    staffScheduleDetails: List<StaffScheduleDetail>.from(json["staffScheduleDetails"].map((x) => StaffScheduleDetail.fromJson(x))),
     staffQualifications: List<StaffQualification>.from(json["staffQualifications"].map((x) => StaffQualification.fromJson(x))),
   );
 
@@ -38,8 +38,8 @@ class StaffDetailModel {
     "staffPersonalDetails": staffPersonalDetails.toJson(),
     "staffContactDetails": staffContactDetails.toJson(),
     "staffEmploymentDetails": staffEmploymentDetails.toJson(),
-    "staffEmergencyContactDetails": List<dynamic>.from(staffEmergencyContactDetails.map((x) => x)),
-    "staffScheduleDetails": staffScheduleDetails.toJson(),
+    "staffEmergencyContactDetails": List<dynamic>.from(staffEmergencyContactDetails.map((x) => x.toJson())),
+    "staffScheduleDetails": List<dynamic>.from(staffScheduleDetails.map((x) => x.toJson())),
     "staffQualifications": List<dynamic>.from(staffQualifications.map((x) => x.toJson())),
   };
 }
@@ -151,7 +151,7 @@ class StaffEmploymentDetails {
   });
 
   int userId;
-  int hireDate;
+  String hireDate;
   int endDate;
   bool status;
   bool salaried;
@@ -160,7 +160,7 @@ class StaffEmploymentDetails {
 
   factory StaffEmploymentDetails.fromJson(Map<String, dynamic> json) => StaffEmploymentDetails(
     userId: json["userId"],
-    hireDate: int.parse((json["hireDate"]==""||json["hireDate"]==null?"0":json["hireDate"].toString()).toString()),
+    hireDate: json["hireDate"],
     endDate: json["endDate"]??0,
     status: json["status"],
     salaried: json["salaried"],
@@ -290,7 +290,7 @@ class StaffQualification {
     completionDate: json["completionDate"],
     expirationDate: json["expirationDate"],
     expirationNa: json["expirationNA"],
-    document: json["document"],
+    document: json["document"]??"",
     certificateExpired: json["certificateExpired"],
   );
 
@@ -305,22 +305,51 @@ class StaffQualification {
   };
 }
 
-class StaffScheduleDetails {
-  StaffScheduleDetails({
-    required this.studentScheduleDetails,
-    required this.studentScheduledDays,
+class StaffScheduleDetail {
+  String roomName;
+  String startTime;
+  String endTime;
+  List<ScheduledDay> scheduledDays;
+
+  StaffScheduleDetail({
+    required this.roomName,
+    required this.startTime,
+    required this.endTime,
+    required this.scheduledDays,
   });
 
-  List<dynamic> studentScheduleDetails;
-  List<dynamic> studentScheduledDays;
-
-  factory StaffScheduleDetails.fromJson(Map<String, dynamic> json) => StaffScheduleDetails(
-    studentScheduleDetails: List<dynamic>.from(json["studentScheduleDetails"].map((x) => x)),
-    studentScheduledDays: List<dynamic>.from(json["studentScheduledDays"].map((x) => x)),
+  factory StaffScheduleDetail.fromJson(Map<String, dynamic> json) => StaffScheduleDetail(
+    roomName: json["roomName"],
+    startTime: json["startTime"],
+    endTime: json["endTime"],
+    scheduledDays: List<ScheduledDay>.from(json["scheduledDays"].map((x) => ScheduledDay.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "studentScheduleDetails": List<dynamic>.from(studentScheduleDetails.map((x) => x)),
-    "studentScheduledDays": List<dynamic>.from(studentScheduledDays.map((x) => x)),
+    "roomName": roomName,
+    "startTime": startTime,
+    "endTime": endTime,
+    "scheduledDays": List<dynamic>.from(scheduledDays.map((x) => x.toJson())),
   };
 }
+
+class ScheduledDay {
+  int day;
+  bool scheduled;
+
+  ScheduledDay({
+    required this.day,
+    required this.scheduled,
+  });
+
+  factory ScheduledDay.fromJson(Map<String, dynamic> json) => ScheduledDay(
+    day: json["day"],
+    scheduled: json["scheduled"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "day": day,
+    "scheduled": scheduled,
+  };
+}
+

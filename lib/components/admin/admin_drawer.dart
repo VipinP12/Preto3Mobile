@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:preto3/controller/Admin/drawer_controller/admin_profile_controller.dart';
 import 'package:preto3/controller/Parent/parent_dashboard_controller.dart';
 import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
@@ -46,6 +47,7 @@ class AdminDrawer extends StatelessWidget {
                     onTap: () {
                       print("object");
                       // dashboardController.closeDrawer();
+                      Get.put(AdminProfileController());
                       Get.toNamed(AppRoute.editAdminProfile);
                     },
                     child: Column(
@@ -116,10 +118,10 @@ class AdminDrawer extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: ()
-                          // {
-                          //   print("edit profile");
-                          // },
-                          => Get.toNamed(AppRoute.editAdminProfile),
+                          {
+                            Get.put(AdminProfileController());
+                            Get.toNamed(AppRoute.editAdminProfile);
+                          },
                           child: Text("Edit Profile",
                               style: GoogleFonts.poppins(
                                   color: AppColor.editProfile,

@@ -51,22 +51,26 @@ class AuthorizePikupController extends GetxController with BaseController {
 
   void getParentChildern(String urlVal) async {
     showLoading();
-    var response = await BaseClient()
-        .get(ApiEndPoints.devBaseUrl,
-            '${ApiEndPoints.getParentMyChildern}$urlVal')
-        .catchError(handleError);
-    if (response != null) {
-      allChildern.value = parentStudentsFromJson(response);
-      student.value = [];
-      for (ParentStudents parentStudents in allChildern.value) {
-        print(parentStudents.id);
-        student.value.add(parentStudents.id);
+    try{
+      var response = await BaseClient()
+          .get(ApiEndPoints.devBaseUrl,
+          '${ApiEndPoints.getParentMyChildern}$urlVal')
+          .catchError(handleError);
+      if (response != null) {
+        allChildern.value = parentStudentsFromJson(response);
+        student.value = [];
+        for (ParentStudents parentStudents in allChildern.value) {
+          print(parentStudents.id);
+          student.value.add(parentStudents.id);
+        }
+        url.value =
+        "${url.value}&studentIds=${student.value.toString().replaceAll("[", "").replaceAll("]", "")}";
+        getListOfAuthorizePickup(url);
       }
-      url.value =
-          "${url.value}&studentIds=${student.value.toString().replaceAll("[", "").replaceAll("]", "")}";
-      getListOfAuthorizePickup(url);
-    }
 
+    }catch(e){
+      log("Exception:${e.toString()}");
+    }
     hideLoading();
     update();
   }

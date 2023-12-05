@@ -14,20 +14,20 @@ class LocalNotificationService {
 
     _notificationsPlugin.initialize(
       initializationSettings,
-      onSelectNotification: (String? id) async {
-        print("onSelectNotification"); //We will handled notification here
-        if (id!.isNotEmpty) {
-          print("Router Value1234 $id");
-
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => DemoScreen(
-          //       id: id,
-          //     ),
-          //   ),
-          // );
-        }
-      },
+      // onSelectNotification: (String? id) async {
+      //   print("onSelectNotification"); //We will handled notification here
+      //   if (id!.isNotEmpty) {
+      //     print("Router Value1234 $id");
+      //
+      //     // Navigator.of(context).push(
+      //     //   MaterialPageRoute(
+      //     //     builder: (context) => DemoScreen(
+      //     //       id: id,
+      //     //     ),
+      //     //   ),
+      //     // );
+      //   }
+      // },
     );
   }
 
@@ -38,7 +38,7 @@ class LocalNotificationService {
         android: AndroidNotificationDetails(
           "preto3demoproject",
           "preto3demoprojectchannel",
-          'Only just for testing',
+          // 'Only just for testing',
           importance: Importance.max,
           priority: Priority.high,
         ),

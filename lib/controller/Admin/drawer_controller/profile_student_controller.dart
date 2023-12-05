@@ -20,12 +20,19 @@ import '../../../model/gender_model.dart';
 class ProfileStudentController extends GetxController with BaseController {
   final storageBox = GetStorage();
 
+  final firstNameKey = GlobalKey<FormState>();
+  final lastNameKey = GlobalKey<FormState>();
   final addAllergiesKey = GlobalKey<FormState>();
   final addMedicationKey = GlobalKey<FormState>();
 
+  var firstNameController = TextEditingController();
+  var lastNameController = TextEditingController();
   var allergiesController = TextEditingController();
   var medicationController = TextEditingController();
 
+  var firstName = "".obs;
+  var lastName = "".obs;
+  var birthDay = "".obs;
   var allergies = "".obs;
   var medication = "".obs;
 
@@ -39,16 +46,19 @@ class ProfileStudentController extends GetxController with BaseController {
 
   var roleId = 0.obs;
   var schoolId = 0.obs;
-  var studentId = 1006488.obs;
+  var studentId = 0.obs;
   var genderIndex = 0.obs;
   var enrollmentIndex = 0.obs;
   final raceList = <RaceList?>[].obs;
   final ethnicityList = <EthnicityList?>[].obs;
   final schoolProgrammeList = <SchoolProgrammeModelDart?>[].obs;
+  final parentsList = <Parent>[].obs;
+  final emergencyList = <EmergencyContact>[].obs;
   final allRoomList = <RoomListModel?>[].obs;
   final allergiesList = <String?>[].obs;
   final medicationList = <String?>[].obs;
 
+  StudentProfileModelDart? profileResponse;
   RaceList? raceType;
   SchoolProgrammeModelDart? programmeType;
   EthnicityList? ethnicType;
@@ -62,15 +72,40 @@ class ProfileStudentController extends GetxController with BaseController {
 
   var programmeId = 0.obs;
   var selectedProgramme = "".obs;
+  var isLoading = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     roleId.value = storageBox.read(AppKeys.keyRoleId);
     schoolId.value = storageBox.read(AppKeys.keySchoolId);
+    studentId.value = storageBox.read(AppKeys.keyId);
 
     allergiesController = TextEditingController();
     medicationController = TextEditingController();
+   /* emergencyList.value = [
+      EmergencyContact(
+          userId: 1,
+          firstName: "ABDUL",
+          lastName: "RAHMAN",
+          email: "abrahman@gmail.com",
+          contactPhone: "+919222222933",
+          phoneValidate: false),
+      EmergencyContact(
+          userId: 2,
+          firstName: "AJAY",
+          lastName: "KUMAR",
+          email: "abrahman@gmail.com",
+          contactPhone: "+9192645343423",
+          phoneValidate: false),
+      EmergencyContact(
+          userId: 3,
+          firstName: "RANBIR",
+          lastName: "SINGH",
+          email: "abrahman@gmail.com",
+          contactPhone: "+919288534379",
+          phoneValidate: false),
+    ];*/
   }
 
   @override
@@ -87,6 +122,20 @@ class ProfileStudentController extends GetxController with BaseController {
     super.dispose();
     allergiesController.dispose();
     medicationController.dispose();
+  }
+
+  String? firstNameValidator(String value) {
+    if (value.isNotEmpty) {
+      return null;
+    }
+    return 'Please enter a valid first name';
+  }
+
+  String? lastNameValidator(String value) {
+    if (value.isNotEmpty) {
+      return null;
+    }
+    return 'Please enter a valid last name';
   }
 
   String? allergyValidator(String value) {
@@ -116,6 +165,7 @@ class ProfileStudentController extends GetxController with BaseController {
   void getStudentProfile(int studentId, int roleId) async {
     showLoading();
     try {
+      isLoading.value=true;
       var response = await BaseClient()
           .get(
               ApiEndPoints.devBaseUrl,
@@ -123,10 +173,19 @@ class ProfileStudentController extends GetxController with BaseController {
               '?id=$studentId&roleId=$roleId')
           .catchError(handleError);
 
-      var profileResponse = studentProfileModelDartFromJson(response);
-      log("PROFILE RESP:${profileResponse.studentPersonalDetails.firstName}");
-      log("PROFILE RESP:${profileResponse.studentEnrollmentDetails.programName}");
-      log("PROFILE RESP:${profileResponse.parents.length}");
+      profileResponse = studentProfileModelDartFromJson(response);
+      firstNameController.text =
+          profileResponse!.studentPersonalDetails.firstName;
+      lastNameController.text =
+          profileResponse!.studentPersonalDetails.lastName;
+      log("PROFILE RESP:${profileResponse!.studentPersonalDetails.firstName}");
+      log("PROFILE RESP:${profileResponse!.studentEnrollmentDetails.programName}");
+      log("PROFILE RESP:${profileResponse!.parents}");
+
+      birthDay.value =
+          profileResponse!.studentPersonalDetails.birthDay.toString();
+      isLoading.value=false;
+      update();
     } catch (e) {
       log(e.toString());
     }

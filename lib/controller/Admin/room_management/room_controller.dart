@@ -81,8 +81,7 @@ class RoomController extends GetxController with GetSingleTickerProviderStateMix
   }
   Future<void> getAllRoomRatio(int schoolId) async {
     showLoading('Fetching data');
-    var response= await BaseClient().get(ApiEndPoints.devBaseUrl,
-        '${ApiEndPoints.allRoomRatio}''?schoolId=$schoolId&isWebRequest=true&timezone=Asia/Calcutta').catchError(handleError);
+    var response= await BaseClient().get(ApiEndPoints.devBaseUrl, '${ApiEndPoints.allRoomRatio}''?schoolId=$schoolId&isWebRequest=false&timezone=Asia/Calcutta').catchError(handleError);
     if(response!=null){
       print("RESPONSE:$response");
       var roomResponse = RoomRatioModel.fromJson(json.decode(response));

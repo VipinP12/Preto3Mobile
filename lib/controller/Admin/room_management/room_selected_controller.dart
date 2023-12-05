@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:preto3/controller/base_controller.dart';
+import 'package:preto3/model/admit/room_student_model.dart';
 import 'package:preto3/model/room_selected_model.dart';
 import 'package:preto3/model/room_selected_staff_model.dart';
 import 'package:preto3/network/api_end_points.dart';
@@ -42,7 +44,7 @@ class RoomSelectedController extends GetxController
     ),
   ];
   // final checkList = <CheckInModel>[].obs;
-  final allStudentList = <RoomSelectedModel?>[].obs;
+  final allStudentList = <RoomStudentModel>[].obs;
   final allStaffList = <RoomSelectedStaffModelDart?>[].obs;
 
   @override
@@ -74,14 +76,16 @@ class RoomSelectedController extends GetxController
   void getClassRoomStudent(int roleId, int classId, int schoolId ) async {
     showLoading();
     String timez = await configureLocalTimeZone();
+    log("ADMIN ROOM STUDENTS");
     var response = await BaseClient()
         .get(
             ApiEndPoints.devBaseUrl,
-            '${ApiEndPoints.allRoomStudent}'
-            '?roleId=$roleId&schoolId=$schoolId&classId=$classId')
+            '${ApiEndPoints.checkList}'
+            '?roleId=$roleId&schoolId=$schoolId&roomId=$classId&timezone=$timez&dateSelected=${nowDate.value}')
             // '?roleId=2&schoolId=1002939&classId=1002350')
         .catchError(handleError);
-    allStudentList.value = roomSelectedModelFromJson(response);
+    allStudentList.value = roomStudentModelFromJson(response);
+    log("ADMIN STUDENTS LIST:${jsonDecode(response)}");
     log("ALL STUDENTS :${allStudentList.length}");
     hideLoading();
     update();

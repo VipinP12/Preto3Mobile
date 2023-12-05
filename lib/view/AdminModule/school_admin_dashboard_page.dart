@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:preto3/components/rounded_button.dart';
 import 'package:preto3/controller/Admin/dashboard_controller.dart';
+import 'package:preto3/controller/room_controller.dart';
 import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
 import 'package:preto3/utils/app_routes.dart';
@@ -694,8 +695,10 @@ class DashboardPage extends StatelessWidget {
                                               .name ==
                                               "Room"
                                               ? Text(
-                                            "${roomController.allRoomList.length
-                                                 } Rooms",
+                                            "${roomController.allRoomList.value.length
+                                                .toString()} Rooms",
+                                            // "${roomController.allRoomList.length
+                                            //      } Rooms",
                                             style: GoogleFonts.poppins(
                                                 color: controller
                                                     .dashboardCategory[

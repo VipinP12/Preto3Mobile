@@ -15,7 +15,7 @@ class SwitchSchoolRoleBottomSheet extends StatelessWidget {
     return Column(
       children: [
         Container(
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.6,
             // eventController.roleId.value == 4
             //     ? MediaQuery.of(context).size.height * 0.6
             //     : MediaQuery.of(context).size.height * 0.6,

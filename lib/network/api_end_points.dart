@@ -11,6 +11,7 @@ class ApiEndPoints {
   static const plaidURL = "https://sandbox.plaid.com";
   static const googlePlacesApiKey = "AIzaSyCAlkHLmhM5ho_uXEctCkG_hflHmDEJgKY";
   static const googleTimeZoneApiKey = "AIzaSyD4gS9zmlzjKj13_pfUvSNKdwATO_9W7lE";
+  static const googleMapAPI = "9a90f533fc25ad471116399854398f1d";
   static const createLinkToken = "/link/token/create";
   //WE PAY STAGING
   static const wePayStagingURL = "https://stage.wepayapi.com/v2";
@@ -114,6 +115,7 @@ class ApiEndPoints {
   //ADMIN
   static const allRoomRatio = "/dashboard/getRoomRatioDashboard";
   static const adminProfileDetail = "/profile/adminProfileDetails";
-  static const allActiveStaffList = "/staff/allStaff";
-  static const updateProfileDetail = "/profile/updateAdminProfileDetails";
+  static const adminUpdateProfileDetail = "/profile/updateAdminProfileDetails";
+  static const allActiveStaffList = "staff/allStaff";
+  // http://192.168.1.57:8082/staff/allStaff?classId=0&isActive=true&schoolId=1002939
 }

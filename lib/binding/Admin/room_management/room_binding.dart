@@ -6,7 +6,6 @@ class RoomBinding extends Bindings{
   @override
   void dependencies() {
     Get.put(RoomController());
-    // Get.put(ClassRoomController());
   }
 
 }

@@ -42,6 +42,7 @@ class AppString{
   //ADMIN MODULE
   static const String scheduleList="Schedule List";
   static const String studentList="Students";
+  static const String addEvents="Add Event";
 
 
   //PARENT MODULE

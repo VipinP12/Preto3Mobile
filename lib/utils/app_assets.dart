@@ -131,5 +131,7 @@ class AppAssets {
   static const feeIcon = "assets/icons/feemanagementIcon.svg";
   static const schoolIcon = "assets/icons/schoolSetting.svg";
   static const authorizeIcon = "assets/icons/authorizeIcon.svg";
+  static const addIcon = "assets/icons/add_icon.svg";
+  static const checkedIcon = "assets/icons/checked_icon.svg";
 
 }

@@ -2,16 +2,22 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:google_places_flutter/model/prediction.dart';
 import 'package:intl/intl.dart';
 import 'package:preto3/components/rounded_button.dart';
+import 'package:preto3/model/language_model.dart';
+import 'package:preto3/model/language_model.dart';
+import 'package:preto3/network/api_end_points.dart';
 import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
-import '../../../controller/Admin/drawer_controller/admin_profile_controller.dart';
-import '../../../utils/app_keys.dart';
-import '../../../utils/comman_textStyle.dart';
-import '../../../utils/comman_textfield.dart';
+import '../../controller/Admin/drawer_controller/admin_profile_controller.dart';
+import '../../utils/app_keys.dart';
+import '../../utils/comman_textStyle.dart';
+import '../../utils/comman_textfield.dart';
 
 class EditAdminProfile extends StatefulWidget {
     const EditAdminProfile({Key? key}) : super(key: key);
@@ -21,22 +27,8 @@ class EditAdminProfile extends StatefulWidget {
 }
 
 class _EditAdminProfileState extends State<EditAdminProfile> {
+  final adminProfileController = Get.put(AdminProfileController());
 
-  final adminProfileController = Get.find<AdminProfileController>( );
-
-
-    void selectDatePicker()async{
-      DateTime? datepicker = await showDatePicker(
-          context: context,
-          initialDate: adminProfileController.selectedDate ?? DateTime.now(),
-          firstDate: DateTime(1999),
-          lastDate:  DateTime(2028));
-      if(datepicker!=null && datepicker !=adminProfileController.selectedDate){
-        setState(() {
-          adminProfileController.selectedDate = datepicker;
-        });
-      }
-    }
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +49,10 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                 pinned: true,
                 actions: [
                   InkWell(
-                    onTap:
-                    adminProfileController.onSavePressed,
-                    //     () {
-                    //   print("edit profile");
-                    //   adminProfileController.onSavePressed();
-                    // },
+                    onTap: () {
+                     // log("edit");
+                     adminProfileController.validateProfile();
+                    },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 16.0, top: 16),
                       child: Text(
@@ -83,70 +73,70 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                     fit: BoxFit.fill,
                   ),
                   title: SingleChildScrollView(
-                      child:  Obx(()=>Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 140,
-                          ),
-                          Container(
-                            height: 90,
-                            width: 90,
-                            decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(90)),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(90),
-                              child: CachedNetworkImage(
-                                placeholder: (context, url) => const Image(
-                                  height: 75,
-                                  width: 75,
-                                  image: AssetImage(
-                                    AppAssets.placeHolder,
-                                  ),
-                                  fit: BoxFit.cover,
+                    child:  Obx(()=>Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 140,
+                        ),
+                        Container(
+                          height: 90,
+                          width: 90,
+                          decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(90)),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(90),
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => const Image(
+                                height: 75,
+                                width: 75,
+                                image: AssetImage(
+                                  AppAssets.placeHolder,
                                 ),
-                                imageUrl:
-                                '${adminProfileController.profilePic}',
                                 fit: BoxFit.cover,
-                                errorWidget: (context, url, error) => const Image(
-                                  height: 75,
-                                  width: 75,
-                                  image: AssetImage(
-                                    AppAssets.placeHolder,
-                                  ),
-                                  fit: BoxFit.cover,
+                              ),
+                              imageUrl:
+                              '${adminProfileController.profilePic}',
+                              fit: BoxFit.cover,
+                              errorWidget: (context, url, error) => const Image(
+                                height: 75,
+                                width: 75,
+                                image: AssetImage(
+                                  AppAssets.placeHolder,
                                 ),
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "${adminProfileController.firstName.value} ${adminProfileController.lastName.value}",
-                            // "${adminProfileController.storageBox.read(AppKeys.keyFirstName)} ${adminProfileController.storageBox.read(AppKeys.keyLastName)}",
-                            style: GoogleFonts.poppins(
-                                color: AppColor.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w400),
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            "Check in/out Pin: ${adminProfileController.checkInCheckOut.value}",
-                            style: GoogleFonts.poppins(
-                                color: AppColor.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),)
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "${adminProfileController.firstName.value} ${adminProfileController.lastName.value}",
+                          // "${adminProfileController.storageBox.read(AppKeys.keyFirstName)} ${adminProfileController.storageBox.read(AppKeys.keyLastName)}",
+                          style: GoogleFonts.poppins(
+                              color: AppColor.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w400),
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Obx(() => Text(
+                          "Check in/out Pin: ${adminProfileController.checkInCheckOut.value}",
+                          style: GoogleFonts.poppins(
+                              color: AppColor.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400),
+                        ),)
+                      ],
+                    ),)
                   ),
                   collapseMode: CollapseMode.parallax,
                 ),
@@ -161,18 +151,18 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CommonTextField(
-                      hintText: 'First Name',
-                      title: 'First Name',
-                      controller: adminProfileController.firstNameController,
-                    ),
-                    CommonTextField(
+                        CommonTextField(
+                        hintText: 'First Name',
+                        title: 'First Name',
+                          controller: adminProfileController.firstNameController,
+                      ),
+                      CommonTextField(
                       controller: adminProfileController.lastNameController,
                       hintText: 'Last Name',title: "Last Name",),
-                    CommonTextField(
+                      CommonTextField(
                       controller: adminProfileController.emailController,
                       hintText: 'Email', isEmailVerified: true,title: "example@1gmail.com",),
-                    CommonTextField(
+                      CommonTextField(
                       controller: adminProfileController.phoneNumberController,
                       hintText: '1234567890',title: "Phone Number",),
                     const Text("Date Of Birth",style: TextStyles.fontSize12),
@@ -181,28 +171,26 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         color: AppColor.disableColor,
-                        borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8),
                       ),
                       child:   Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
                         child: InkWell(
                           onTap: (){
-                            selectDatePicker();
-                            log(adminProfileController.selectedDate != null
-                                ? DateFormat('dd/MM/yyyy').format(adminProfileController.selectedDate!)
+                            adminProfileController.selectDatePicker(context);
+                             log(adminProfileController.selectedDate != null
+                                ?  adminProfileController.selectedDate.value
                                 : "Enter date");
                           },
                           child:  Row(
                             children: [
                               const Icon(Icons.calendar_month_sharp),
                               const SizedBox(width: 10,),
-                              Text(
-                                adminProfileController.selectedDate != null
-                                    ? DateFormat('dd/MM/yyyy').format(adminProfileController.selectedDate!)
-                                    : adminProfileController.dateOfBirthController.text,
+                              Obx(() => Text(
+                                adminProfileController.selectedDate.value,
                                 // "Enter date",
                                 style: const TextStyle(color: Colors.black),
-                              ),
+                              ),)
                             ],
                           ),
                         ),
@@ -211,80 +199,265 @@ class _EditAdminProfileState extends State<EditAdminProfile> {
                     const SizedBox(height: 20,),
                     const Text("Spoken Languages",style: TextStyles.fontSize12),
                     const SizedBox(height: 10,),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColor.disableColor,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: DropdownButton<String>(
-                              value: adminProfileController.selectedValue,
-                              items: <String>['Hindi', 'English',]
-                                  .map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                                    child: Text(value),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  adminProfileController.selectedValue = newValue!;
-                                });
-                              },
-                              isExpanded: true,
+                      Obx(() =>  Container(
+                        decoration: BoxDecoration(
+                          color: AppColor.disableColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: adminProfileController.isDropDown.value==false && adminProfileController.setLangList.isNotEmpty
+                                  ? DropdownButton<LanguageModel>(
+                          value: adminProfileController.language,
+                          items: adminProfileController.allLanguageList
+                              .map((LanguageModel? lang) {
+                            return DropdownMenuItem<LanguageModel>(
+                              value: lang,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(lang!.name),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (newValue) {
+                            adminProfileController.setLanguage(newValue!);
+                            adminProfileController.setDropDown(!adminProfileController.isDropDown.value);
+                          },
+                          underline: const SizedBox.shrink(),
+                          isExpanded: true,
+                          icon: const SizedBox.shrink(),
+                        )
+                                  : SizedBox(
+                                height: 48,
+                                width: double.maxFinite,
+                                child: GetBuilder<AdminProfileController>(
+                                  builder: (controller) => ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount:
+                                      controller.setLangList.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              controller.removeLanguages(
+                                                  controller
+                                                      .setLangList[index].name,controller.setLangList[index].id);
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  color: AppColor.allergiesBg,
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      5)),
+                                              child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 8.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .center,
+                                                    children: [
+                                                      Text(
+                                                        controller
+                                                            .setLangList[
+                                                        index].name
+                                                            .toString(),
+                                                        style: GoogleFonts.poppins(
+                                                            color: AppColor
+                                                                .allergiesText,
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w400),
+                                                      ),
+                                                      const Padding(
+                                                        padding:
+                                                        EdgeInsets.only(
+                                                            left: 8.0),
+                                                        child: Icon(
+                                                          Icons.close,
+                                                          size: 18,
+                                                          color: AppColor
+                                                              .allergiesText,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )),
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                ),
+                              )
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    CommonTextField(
+                            InkWell(
+                              onTap: (){
+                                adminProfileController.setDropDown(!adminProfileController.isDropDown.value);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                child: SvgPicture.asset(AppAssets.dropdownIcon),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),),
+                      CommonTextField(
                       controller: adminProfileController.bioController,
                       hintText: '---',title: "Bio",),
-                    CommonTextField(
-                      controller: adminProfileController.addressController,
-                      hintText: 'Address',title: "Address",),
-                    CommonTextField(
+                    GooglePlaceAutoCompleteTextField(
+                      textEditingController: adminProfileController.addressController,
+                      boxDecoration: const BoxDecoration(
+                        border: Border.fromBorderSide(BorderSide.none)
+                      ),
+                      googleAPIKey: ApiEndPoints.googleTimeZoneApiKey,
+                      inputDecoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: AppColor.borderColor)
+                        ),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: AppColor.borderColor)
+                          )
+                      ),
+                      debounceTime: 400,
+                      countries: const ["in", "us"],
+                      isLatLngRequired: false,
+                      getPlaceDetailWithLatLng: (Prediction prediction) {
+                        print("placeDetails ${prediction.lat}");
+                      },
+
+                      itemClick: (Prediction prediction) {
+                        log("ADDRESS SELECTED:${prediction.description}");
+                        log("COUNTRY SELECTED:${prediction.description}");
+                        log("COUNTRY ID:${prediction.id}");
+                        log("PLACE ID:${prediction.placeId}");
+                        adminProfileController.addressController.text = prediction.description ?? "";
+                        adminProfileController.addressController.selection = TextSelection.fromPosition(
+                            TextPosition(offset: prediction.description?.length ?? 0));
+                        final predictedParts = prediction.description!.split(",");
+
+                        if (predictedParts.length >= 3) {
+                          int startIndex = predictedParts.length - 3;
+                          adminProfileController.cityController.text = predictedParts[startIndex].trim();
+                          adminProfileController.stateController.text = predictedParts[startIndex+1].trim();
+                          adminProfileController.countryController.text = predictedParts[startIndex+2].trim();
+                          adminProfileController.addressController.text=prediction.description!.toString();
+                          log("COUNTRY:${adminProfileController.countryController.text}");
+                          log("STATE:${adminProfileController.stateController.text}");
+                          log("CITY:${ adminProfileController.cityController.text}");
+                        }
+                      },
+                      seperatedBuilder: const Divider(),
+                      // OPTIONAL// If you want to customize list view item builder
+                      itemBuilder: (context, index, Prediction prediction) {
+                        return Container(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.location_on),
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              Expanded(child: Text(prediction.description??""))
+                            ],
+                          ),
+                        );
+                      },
+
+                      isCrossBtnShown: false,
+
+                      // default 600 ms ,
+                    ),
+                      CommonTextField(
                       controller: adminProfileController.countryController,
                       hintText: 'Country',title: "Country",),
-                    CommonTextField(
-                        controller: adminProfileController.stateController,
+                      CommonTextField(
+                      controller: adminProfileController.stateController,
                         hintText: 'State',title: "State"),
-                    CommonTextField(
+                      CommonTextField(
                       controller: adminProfileController.cityController,
                       hintText: 'City',title: "City",),
-                    const SizedBox(height: 20,),
+                    // Visibility(
+                    //   visible: adminProfileController.isActive=false,
+                    //   child: Row(
+                    //     children: [
+                    //       RoundedButton(
+                    //         height: 50,
+                    //         width: MediaQuery.of(context).size.width*0.30,
+                    //         color: AppColor.appPrimary.withOpacity(0.20),
+                    //         onClick: () {
+                    //           // parentController.changePasswordSession(context);
+                    //         },
+                    //         text: 'Cancel',
+                    //         style: GoogleFonts.poppins(
+                    //             color: AppColor.appPrimary,
+                    //             fontSize: 16,
+                    //             fontWeight: FontWeight.w500),
+                    //       ),
+                    //       SizedBox(width: 20,),
+                    //       RoundedButton(
+                    //         height: 50,
+                    //         width: MediaQuery.of(context).size.width*0.30,
+                    //         color: AppColor.appPrimary,
+                    //         onClick: () {
+                    //           // parentController.changePasswordSession(context);
+                    //         },
+                    //         text: 'Save',
+                    //         style: GoogleFonts.poppins(
+                    //             color: AppColor.white,
+                    //             fontSize: 16,
+                    //             fontWeight: FontWeight.w400),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    SizedBox(height: 20,),
                     ExpansionTile(
-                      tilePadding: const EdgeInsets.symmetric(horizontal: 10),
-                      title: const Text("Change Password", style: TextStyles.fontSize12),
+                      tilePadding: EdgeInsets.symmetric(horizontal: 10),
+                      title: Text("Change Password", style: TextStyles.fontSize12),
                       // leading: Icon(Icons.arrow_drop_down),
                       children: [
                         const SizedBox(height: 20),
-                        CommonTextField(
-                          controller: adminProfileController.oldChangeController,
-                          hintText: 'Old Password',
-                          title: 'Change Password',
+                        Form(
+                          key: adminProfileController.passwordKey,
+                          child: CommonTextField(
+                            controller: adminProfileController.oldChangeController,
+                            hintText: 'Current Password',
+                            title: 'Current Password',
+                            validator: (p0) => adminProfileController.passwordValidator(p0!),
+                          ),
                         ),
-                        CommonTextField(
-                          controller: adminProfileController.newChangeController,
-                          hintText: 'New Password',
-                          title: 'New Password',
+                        Form(
+                          key: adminProfileController.newPasswordKey,
+                          child: CommonTextField(
+                            controller: adminProfileController.newChangeController,
+                            hintText: 'New Password',
+                            title: 'New Password',
+                            validator: (p0) => adminProfileController.newPasswordValidator(p0!),
+                          ),
                         ),
-                        CommonTextField(
-                          controller: adminProfileController.confirmChangeController,
-                          hintText: 'Confirm Password',
-                          title: 'Confirm Password',
+                        Form(
+                          key: adminProfileController.cPasswordKey,
+                          child: CommonTextField(
+                            controller: adminProfileController.confirmChangeController,
+                            hintText: 'Confirm Password',
+                            title: 'Confirm Password',
+                            validator: (p0) => adminProfileController.cPasswordValidator(p0!),
+                          ),
                         ),
                         RoundedButton(
                           height: 50,
                           width: MediaQuery.of(context).size.width,
                           color: AppColor.appPrimary,
                           onClick: () {
-                            // parentController.changePasswordSession(context);
+                            adminProfileController.changePasswordSession(context);
                           },
                           text: 'Change Password',
                           style: GoogleFonts.poppins(

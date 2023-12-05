@@ -18,7 +18,7 @@ class AdminProfile {
   String dateOfBirth;
   String userProfilePic;
   String userRoleDescription;
-  // List<int> spokenLanguages;
+  List<int> spokenLanguages;
   String spokenLanguagesStr;
   dynamic userAddress;
   dynamic cityName;
@@ -43,7 +43,7 @@ class AdminProfile {
     required this.dateOfBirth,
     required this.userProfilePic,
     required this.userRoleDescription,
-    // required this.spokenLanguages,
+    required this.spokenLanguages,
     required this.spokenLanguagesStr,
     required this.userAddress,
     required this.cityName,
@@ -69,7 +69,7 @@ class AdminProfile {
     dateOfBirth: json["dateOfBirth"],
     userProfilePic: json["userProfilePic"]??"",
     userRoleDescription: json["userRoleDescription"],
-    // spokenLanguages: List<int>.from(json["spokenLanguages"].map((x) => x)),
+    spokenLanguages: List<int>.from(json["spokenLanguages"].map((x) => x)),
     spokenLanguagesStr: json["spokenLanguagesStr"]??"",
     userAddress: json["userAddress"]??"",
     cityName: json["cityName"]??"",
@@ -95,7 +95,7 @@ class AdminProfile {
     "dateOfBirth": dateOfBirth,
     "userProfilePic": userProfilePic,
     "userRoleDescription": userRoleDescription,
-    // "spokenLanguages": List<dynamic>.from(spokenLanguages.map((x) => x)),
+    "spokenLanguages": List<dynamic>.from(spokenLanguages.map((x) => x)),
     "spokenLanguagesStr": spokenLanguagesStr,
     "userAddress": userAddress,
     "cityName": cityName,

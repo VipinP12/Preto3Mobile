@@ -377,9 +377,9 @@ class ParentDashboardController extends GetxController with BaseController {
       pin.value = dashResponse.checkInOutPin;
       childDetailsList.value = dashResponse.childDetails;
       schoolAddress.value = dashResponse.schoolAddress;
-      communicationController.selectedStudentId.value =
-          childDetailsList.first.id;
-      getAllStaff(schoolId, roleId.value, childDetailsList.first.id);
+      // communicationController.selectedStudentId.value =
+      //     childDetailsList.first.id;
+      // getAllStaff(schoolId, roleId.value, childDetailsList.first.id);
       eventCount.value = dashResponse.eventCount;
       storageBox.write(AppKeys.keyParentProfileURL, dashResponse.profilePic);
       storageBox.write(AppKeys.keyFirstName, dashResponse.parentFirstName);
