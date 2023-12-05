@@ -3,6 +3,7 @@ import 'app_color.dart';
 
 class TextStyles {
   static const String fontFamily = 'Outfit';
+
   static TextStyle textStyleFW400(Color color, double size,) {
     return TextStyle(
         color: color,
@@ -29,7 +30,6 @@ class TextStyles {
     fontWeight: FontWeight.w500,
     fontFamily: fontFamily,
   );
-
 
 }
 

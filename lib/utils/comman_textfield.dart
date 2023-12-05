@@ -12,9 +12,18 @@ class CommonTextField extends StatelessWidget {
   final bool? isEmailVerified;
   final Widget? suffixImage;
   final  Color? borderColor;
+  final Widget? prefixIcon;
+  // final  Color? borderColor;
   final TextEditingController? controller;
   final Function(String)? onSaved;
+  // final Function(String)? onTap;
+  final VoidCallback? onTap;
+  final TextInputType keyboardType;
   final String? Function(String?)? validator;
+  final InputBorder? border;
+  final Color?fillColor;
+  final bool?enabled;
+  final EdgeInsetsGeometry?contentPadding;
   // final Color textColor;
   // final Size buttonSize;
   // final VoidCallback onPressed;
@@ -28,8 +37,15 @@ class CommonTextField extends StatelessWidget {
     this.controller,
     this.isEmailVerified = false,
     this.suffixImage,
+    this.prefixIcon,
     this.onSaved,
+    this.keyboardType=TextInputType.text,
     this.validator,
+    this.fillColor,
+this.onTap,
+this.border,
+this.enabled,
+this.contentPadding
     // required this.textColor,
     // required this.buttonSize,
     // required this.titleSize,
@@ -55,23 +71,31 @@ class CommonTextField extends StatelessWidget {
             if (onSaved != null) {
             onSaved!(newValue!);
             }},
+            onTap: onTap,
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.next,
           onEditingComplete: () => FocusScope.of(context).nextFocus(),
           decoration: InputDecoration(
             suffixIcon:  suffixImage,
+            prefixIcon: prefixIcon,
             hintText: hintText,
             filled: true,
+            // fillColor: fillColor ?? Colors.white,
+            // border:border,
+            //  contentPadding:contentPadding,
             fillColor: Colors.white,
             enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(color: AppColor.borderColor,width: 1.5)
             ),
           ),
+          enabled: enabled??true,
+         keyboardType: keyboardType,
         ),
         const SizedBox(height: 20,),
       ],
     );
   }
 }
+
 
 
