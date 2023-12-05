@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:preto3/controller/room_selected_controller.dart';
 import 'package:preto3/model/admit/room_student_model.dart';
 import 'package:preto3/controller/Admin/room_management/room_selected_controller.dart';
 import 'package:preto3/utils/app_assets.dart';
