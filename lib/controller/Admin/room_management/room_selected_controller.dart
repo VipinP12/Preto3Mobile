@@ -118,6 +118,7 @@ class RoomSelectedController extends GetxController
         .catchError(handleError);
     allStaffList.value = roomSelectedStaffModelDartFromJson(response)!;
     hideLoading();
+    log("url data: ${response}");
     log("ALL STAFF :${allStaffList.length}");
     update();
   }

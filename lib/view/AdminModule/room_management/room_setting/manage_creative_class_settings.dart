@@ -10,7 +10,7 @@ import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
 import 'package:preto3/utils/app_string.dart';
 import 'package:preto3/utils/argument_keys.dart';
-import 'package:preto3/view/AdminModule/Rooms/manage_creative_class_staff.dart';
+import 'package:preto3/view/AdminModule/room_management/room_setting/manage_creative_class_staff.dart';
 
 class ManageCreativeClassSettings extends StatelessWidget {
   ManageCreativeClassSettings({super.key});
@@ -73,7 +73,8 @@ class ManageCreativeClassSettings extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    Get.arguments[ArgumentKeys.argumentClassName],
+                    "Hello",
+                    // Get.arguments[ArgumentKeys.argumentClassName],
                     style: const TextStyle(
                       fontSize: 20,
                       color: Color.fromARGB(255, 39, 37, 39),

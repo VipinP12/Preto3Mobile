@@ -9,15 +9,12 @@ import 'package:preto3/utils/app_color.dart';
 import 'package:preto3/utils/app_keys.dart';
 import 'package:preto3/utils/app_routes.dart';
 import 'package:preto3/utils/app_string.dart';
-
-import '../../../controller/checkin_controller.dart';
 import 'package:preto3/utils/argument_keys.dart';
 
 class RoomSelectedPage extends StatelessWidget {
   RoomSelectedPage({Key? key}) : super(key: key);
 
   final roomSelectedController = Get.find<RoomSelectedController>();
-  // final checkInController = Get.find<CheckInController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +35,7 @@ class RoomSelectedPage extends StatelessWidget {
           style: GoogleFonts.poppins(
               color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
         ),
-        actions: const [
+        actions:   [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 4.0),
             child: Icon(
@@ -49,12 +46,13 @@ class RoomSelectedPage extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Get.toNamed(AppRoute.manageCreativeClassSettings, arguments:
-                {
-
-                  ArgumentKeys.argumentClassName:
-                     Get.arguments[ArgumentKeys.argumentClassName]
-                }
+              print("new page for setting");
+              Get.toNamed(AppRoute.manageCreativeClassSettings,
+                //   arguments:
+                // {
+                //   ArgumentKeys.argumentClassName:
+                //      Get.arguments[ArgumentKeys.argumentClassName]
+                // }
               );
             },
             child: const Padding(

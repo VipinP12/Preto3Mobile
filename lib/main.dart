@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:preto3/binding/Admin/Room/manage_creative_class_settings_binding.dart';
 import 'package:preto3/binding/Parent/AuthorizePikupBinding/authorize_pickup_binding.dart';
 import 'package:preto3/binding/Parent/AuthorizePikupBinding/update_authorize_pickup_binding.dart';
 import 'package:preto3/binding/Parent/parent_student_details_binding.dart';
@@ -41,10 +40,8 @@ import 'package:preto3/binding/select_role_binding.dart';
 import 'package:preto3/binding/sign_up_binding.dart';
 import 'package:preto3/binding/splash_binding.dart';
 import 'package:preto3/binding/Admin/students_management/student_binding.dart';
-import 'package:preto3/binding/student_binding.dart';
-import 'package:preto3/view/AdminModule/Rooms/manage_creative_class_settings.dart';
+import 'package:preto3/view/AdminModule/room_management/room_setting/manage_creative_class_settings.dart';
 import 'package:preto3/view/AdminModule/add_parent.dart';
-import 'package:preto3/view/AdminModule/admin_add_events.dart';
 import 'package:preto3/view/AdminModule/admin_staff_profile.dart';
 import 'package:preto3/view/AdminModule/drawer/authorize_pickup_view/authorize_pickup_detail.dart';
 import 'package:preto3/view/AdminModule/drawer/authorize_pickup_view/authorize_pickup_page.dart';
@@ -112,6 +109,7 @@ import 'package:preto3/view/sign_up_school_page.dart';
 import 'package:preto3/view/splash_page.dart';
 import 'package:preto3/view/AdminModule/students_management/student_detail_page.dart';
 // import 'package:url_launcher/url_launcher.dart';
+import 'binding/Admin/Room/manage_creative_class_settings_binding.dart';
 import 'binding/Admin/drawer/add_new_profile_binding.dart';
 import 'binding/Admin/staff_management/add_new_staff_profile.dart';
 import 'binding/Admin/drawer/admin_schedule_binding.dart';
@@ -470,15 +468,20 @@ class MyApp extends StatelessWidget {
             // binding: AddNewProfileBinding()
         ),
         GetPage(
-         name: AppRoute.feesManagement,
-         page: () => const FeeManagement(),
-       // binding: AddNewProfileBinding()
-      ),
-    GetPage(
-    name: AppRoute.invoiceDetail,
-    page: () => const InvoiceDetail(),
-    // binding: AddNewProfileBinding()
-    )
+          name: AppRoute.feesManagement,
+          page: () => const FeeManagement(),
+          // binding: AddNewProfileBinding()
+        ),
+        GetPage(
+          name: AppRoute.invoiceDetail,
+          page: () => const InvoiceDetail(),
+          // binding: AddNewProfileBinding()
+        ),
+        GetPage(
+          name: AppRoute.manageCreativeClassSettings,
+          page: () =>  ManageCreativeClassSettings(),
+           binding: ManageCreativeClassSettingsBinding()
+        )
       ],
     );
   }
