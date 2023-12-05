@@ -73,6 +73,7 @@ class AppRoute {
   static const addPrimaryParent = "/add-primary-parent";
   static const addStaffProfile = "/add-staff-profile";
   static const feesManagement = "/fees-management";
+  static const invoiceDetail = "/invoice-detail";
 
 
   //PARENT

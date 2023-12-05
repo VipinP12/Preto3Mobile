@@ -48,6 +48,7 @@ import 'package:preto3/view/AdminModule/drawer/authorize_pickup_view/authorize_p
 import 'package:preto3/view/AdminModule/drawer/authorize_pickup_view/authorize_pickup_page.dart';
 import 'package:preto3/view/AdminModule/drawer/schedule_view/admin_shedule_page.dart';
 import 'package:preto3/view/AdminModule/drawer/edit_admin_profile.dart';
+import 'package:preto3/view/AdminModule/fee_management/invoice_detail.dart';
 import 'package:preto3/view/AdminModule/staff_management/staff_detail_page.dart';
 import 'package:preto3/view/AdminModule/staff_management/new_staff_add.dart';
 import 'package:preto3/view/AdminModule/students_management/new_student_add.dart';
@@ -123,7 +124,7 @@ import 'binding/Parent/invoice_details_binding.dart';
 import 'binding/Parent/view_invoice_binding.dart';
 import 'binding/Staff/add_emergency_binding.dart';
 import 'binding/Admin/drawer/event_details_binding.dart';
-import 'controller/Admin/fee_management/fee_management.dart';
+import 'view/AdminModule/fee_management/fee_management.dart';
 import 'view/CommunicationModule/communcation_page.dart';
 import 'view/StaffModule/staff_dashboard_page.dart';
 import 'view/StaffModule/student_profile_details.dart';
@@ -473,11 +474,15 @@ class MyApp extends StatelessWidget {
             // binding: AddNewProfileBinding()
         ),
         GetPage(
-          name: AppRoute.feesManagement,
-          page: () => const FeeManagement(),
-          // binding: AddNewProfileBinding()
-        ),
-
+         name: AppRoute.feesManagement,
+         page: () => const FeeManagement(),
+       // binding: AddNewProfileBinding()
+      ),
+    GetPage(
+    name: AppRoute.invoiceDetail,
+    page: () => const InvoiceDetail(),
+    // binding: AddNewProfileBinding()
+    )
       ],
     );
   }

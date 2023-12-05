@@ -77,6 +77,8 @@ class AppAssets {
   static const absentIcon = "assets/icons/absent_icon.svg";
   static const hemBurgerMenuIcon = "assets/icons/hem_burger_menu_icon.svg";
   static const bottomBarCloseIcon = "assets/icons/close_filter.svg";
+  static const refreshIcon = "assets/icons/refresh_icon.svg";
+  static const downloadIcon = "assets/icons/Download_icon.svg";
   //ERRORS
   static const noInternetIcon = "assets/icons/no_internet.svg";
   static const errorIcon = "assets/icons/error.svg";

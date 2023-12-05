@@ -16,7 +16,7 @@ import '../utils/app_routes.dart';
 import 'api_end_points.dart';
 
 class BaseClient with BaseController {
-  static const int timeOutDuration = 20;
+  static const int timeOutDuration = 60;
   final storageBox = GetStorage();
 
   //LOGIN REQUEST

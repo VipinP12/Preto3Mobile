@@ -103,7 +103,6 @@ class DashboardController extends GetxController with BaseController {
             '?roleId=$roleId&schoolId=$schoolId&isWebRequest=$isWebRequest')
         .catchError(handleError);
     print("DASHBOARD RESPONSE:$response");
-
     if (response != null) {
       isOnline.value = true;
       var dashResponse =
@@ -123,12 +122,6 @@ class DashboardController extends GetxController with BaseController {
       roomCount.value = dashResponse.roomCount;
       roomCount.value = dashResponse.roomCount;
       allBirthdayList.value = dashResponse.birthdayResponse;
-      print("staff checkout()()()( ${staffCheckedOut.value}");
-      print("staff absent ()()()( ${staffAbsent.value}");
-      print("staff in ()()()( ${staffCheckedIn.value}");
-      print("student checkout()()()( ${studentCheckedOut.value}");
-      print("student absent ()()()( ${studentAbsent.value}");
-      print("student in ()()()( ${studentCheckedIn.value}");
       if (allBirthdayList.isNotEmpty) {
         String formattedDate = DateFormat.Md()
             .format(DateTime.parse(allBirthdayList[0]!.dob.toString()));
@@ -146,6 +139,7 @@ class DashboardController extends GetxController with BaseController {
         .get(
             ApiEndPoints.devBaseUrl,
             '${ApiEndPoints.userDeleteDeviceInfo}'
+
             '?roleId=${roleId.value}&schoolId=${schoolId.value}')
         .catchError(handleError);
     if (response != null) {
