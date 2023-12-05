@@ -82,4 +82,6 @@ class AppRoute {
 
   //STAFF
   static const dashboardStaff = "/dashboard-staff";
+
+  static const manageCreativeClassSettings = "/manage-creative-class-settings";
 }

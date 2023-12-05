@@ -11,6 +11,7 @@ import 'package:preto3/utils/app_routes.dart';
 import 'package:preto3/utils/app_string.dart';
 
 import '../../../controller/checkin_controller.dart';
+import 'package:preto3/utils/argument_keys.dart';
 
 class RoomSelectedPage extends StatelessWidget {
   RoomSelectedPage({Key? key}) : super(key: key);
@@ -46,12 +47,23 @@ class RoomSelectedPage extends StatelessWidget {
               size: 24,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.0),
-            child: Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 24,
+          InkWell(
+            onTap: () {
+              Get.toNamed(AppRoute.manageCreativeClassSettings, arguments:
+                {
+
+                  ArgumentKeys.argumentClassName:
+                     Get.arguments[ArgumentKeys.argumentClassName]
+                }
+              );
+            },
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.0),
+              child: Icon(
+                Icons.settings,
+                color: Colors.white,
+                size: 24,
+              ),
             ),
           )
         ],
@@ -275,15 +287,8 @@ class RoomSelectedPage extends StatelessWidget {
                                                         CrossAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Text("${controller
-                                                          .allStaffList[
-                                                      index]!
-                                                          .firstName
-                                                          .toString()} ${controller
-                                                          .allStaffList[
-                                                      index]!
-                                                          .lastName
-                                                          .toString()}",
+                                                      Text(
+                                                        "${controller.allStaffList[index]!.firstName.toString()} ${controller.allStaffList[index]!.lastName.toString()}",
                                                         style: GoogleFonts.poppins(
                                                             color: AppColor
                                                                 .heavyTextColor,

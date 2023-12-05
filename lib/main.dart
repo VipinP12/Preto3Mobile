@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:new_version_plus/new_version_plus.dart';
+import 'package:preto3/binding/Admin/Room/manage_creative_class_settings_binding.dart';
 import 'package:preto3/binding/Parent/AuthorizePikupBinding/authorize_pickup_binding.dart';
 import 'package:preto3/binding/Parent/AuthorizePikupBinding/update_authorize_pickup_binding.dart';
 import 'package:preto3/binding/Parent/parent_student_details_binding.dart';
@@ -42,6 +41,8 @@ import 'package:preto3/binding/select_role_binding.dart';
 import 'package:preto3/binding/sign_up_binding.dart';
 import 'package:preto3/binding/splash_binding.dart';
 import 'package:preto3/binding/Admin/students_management/student_binding.dart';
+import 'package:preto3/binding/student_binding.dart';
+import 'package:preto3/view/AdminModule/Rooms/manage_creative_class_settings.dart';
 import 'package:preto3/view/AdminModule/add_parent.dart';
 import 'package:preto3/view/AdminModule/admin_add_events.dart';
 import 'package:preto3/view/AdminModule/admin_staff_profile.dart';
@@ -172,7 +173,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return
+      GetMaterialApp(
       title: 'PreTo3',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
