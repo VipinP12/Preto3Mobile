@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
-import 'app_assets.dart';
 import 'app_color.dart';
 import 'comman_textStyle.dart';
 
@@ -89,7 +86,6 @@ this.contentPadding
             ),
           ),
           enabled: enabled??true,
-         keyboardType: keyboardType,
         ),
         const SizedBox(height: 20,),
       ],

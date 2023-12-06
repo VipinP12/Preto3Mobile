@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:preto3/utils/app_color.dart';
 import 'package:preto3/utils/comman_textStyle.dart';
 import 'package:preto3/utils/comman_textfield.dart';
-import '../controller/school_setting_controller.dart';
+
+import '../../../controller/Admin/school_management/school_setting_controller.dart';
 
 class SchoolSettingPage extends StatelessWidget {
   SchoolSettingPage({super.key});
