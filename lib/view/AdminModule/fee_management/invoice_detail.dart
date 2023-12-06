@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart%20';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../utils/app_assets.dart';
 import '../../../utils/app_color.dart';
-import '../../../utils/app_string.dart';
 import '../../../utils/comman_textStyle.dart';
 
 class InvoiceDetail extends StatelessWidget {
