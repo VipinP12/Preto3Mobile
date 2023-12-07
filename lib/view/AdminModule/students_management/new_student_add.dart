@@ -1,10 +1,12 @@
 import 'dart:developer';
-
+import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:preto3/utils/app_assets.dart';
 import 'package:preto3/utils/app_color.dart';
 import '../../../controller/Admin/students_management/add_new_student_controller.dart';
@@ -12,6 +14,7 @@ import '../../../model/race_model.dart';
 import '../../../model/room_list_model.dart';
 import '../../../model/school_programme_model.dart';
 import '../../../utils/app_dimens.dart';
+import '../../../utils/app_keys.dart';
 import '../../../utils/app_routes.dart';
 import '../../../utils/comman_textStyle.dart';
 import '../../../utils/comman_textfield.dart';
@@ -67,14 +70,23 @@ class AddStudentsProfile extends StatelessWidget {
                       },
                       child: Center(
                         child: Container(
-                            height: 110,
-                            width: 110,
-                            decoration: BoxDecoration(
-                              color: AppColor.black.withOpacity(0.15),
-                              borderRadius: BorderRadius.circular(70),
-                            ),
-                            child: Icon(Icons.camera_alt,color: Colors.white,size: 50,)
-                          // SvgPicture.asset(AppAssets.roundedAdd),
+                          height: 110,
+                          width: 110,
+                          decoration: BoxDecoration(
+                            color: AppColor.black.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(70),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(90),
+                            child: Obx(() =>
+                            profileAddStudentController.selectedImagePath.isEmpty
+                                ?   Icon(Icons.camera_alt,color: Colors.white,size: 50,)
+                                : Image.file(
+                              File(profileAddStudentController
+                                  .selectedImagePath.value),
+                              fit: BoxFit.cover,
+                            )),
+                          ),
                         ),
                       ),
                     ),
@@ -811,7 +823,7 @@ class AddStudentsProfile extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: AppColor.disableColor,
                             borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
+                        child: const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 16.0),
                             child:  Row(children: [
@@ -920,7 +932,7 @@ class AddStudentsProfile extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  // staffController.getImage(ImageSource.camera);
+                                  profileAddStudentController.getImage(ImageSource.camera);
                                   Get.back();
                                 },
                                 child: Container(
@@ -967,7 +979,7 @@ class AddStudentsProfile extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  // staffController.getImage(ImageSource.gallery);
+                                  profileAddStudentController.getImage(ImageSource.gallery);
                                   Get.back();
                                 },
                                 child: Container(

@@ -242,7 +242,7 @@ class StaffNavDrawer extends StatelessWidget {
                         dashboardController.logedOut.value = true;
                         await dashboardController.removePushNotification();
                         dashboardController.storageBox.erase();
-                        SocketServer.instance!.socket.close();
+                        // SocketServer.instance!.socket.close();
                         Get.offAllNamed(AppRoute.login);
                         dashboardController.logedOut.value = false;
                       } else {

@@ -42,6 +42,7 @@ class EventPage extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 0.0),
                   child: InkWell(
                     onTap: () {
+                      print("add events");
                       // _bottomFilterDateSheet(context);
                       Get.toNamed(AppRoute.adminAddEvent);
                     },

@@ -7,6 +7,7 @@ import '../../../utils/app_assets.dart';
 import '../../../utils/app_color.dart';
 import '../drawer/switch_school_role/switch_school_bottomSheet.dart';
 import 'Refund.dart';
+import 'bottomSheet_Apply_Filter.dart';
 import 'chargeback.dart';
 import 'declined.dart';
 
@@ -37,7 +38,7 @@ class FeeManagement extends StatelessWidget {
                   enableDrag: false,
                   builder: (context) {
                     return   const SingleChildScrollView(
-                      child: SwitchSchoolRoleBottomSheet(),
+                      child: FilterApplyBottomSheet(),
                     );
                   },
                 );

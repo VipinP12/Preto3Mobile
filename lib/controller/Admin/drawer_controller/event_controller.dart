@@ -150,7 +150,7 @@ class EventController extends GetxController with BaseController {
     eventList.clear();
     var response = await BaseClient()
         .get(ApiEndPoints.devBaseUrl,
-            '${ApiEndPoints.allEvents}?roleId=$roleId&schoolId=$schoolId&startDate=$startDate&endDate=$endDate')
+            '${ApiEndPoints.allEvents}?roleId=$roleId&schoolId=$schoolId')
         .catchError(handleError);
     if (response != null && response != "") {
       var eventResponse = allEventModelFromJson(response);
@@ -203,7 +203,7 @@ class EventController extends GetxController with BaseController {
     eventList.clear();
     var response = await BaseClient()
         .get(ApiEndPoints.devBaseUrl,
-            '${ApiEndPoints.allEvents}?roleId=$roleId&schoolId=$schoolId&startDate=$startDate&endDate=$endDate')
+            '${ApiEndPoints.allEvents}?roleId=$roleId&schoolId=$schoolId')
         .catchError(handleError);
     if (response != null && response != "") {
       var eventResponse = allEventModelFromJson(response);
@@ -258,7 +258,7 @@ class EventController extends GetxController with BaseController {
     eventList.clear();
     var response = await BaseClient()
         .get(ApiEndPoints.devBaseUrl,
-            '${ApiEndPoints.allEvents}?roleId=$roleId&schoolId=$schoolId&startDate=$startDate&endDate=$endDate')
+            '${ApiEndPoints.allEvents}?roleId=$roleId&schoolId=$schoolId')
         .catchError(handleError);
     if (response != null && response != "") {
       pastEvent.value = [];

@@ -40,6 +40,8 @@ import 'package:preto3/binding/select_role_binding.dart';
 import 'package:preto3/binding/sign_up_binding.dart';
 import 'package:preto3/binding/splash_binding.dart';
 import 'package:preto3/binding/Admin/students_management/student_binding.dart';
+import 'package:preto3/view/AdminModule/admin_add_events.dart';
+import 'package:preto3/view/AdminModule/checkIn_checkOut_management/checkIn_checkOut_page.dart';
 import 'package:preto3/view/AdminModule/room_management/room_setting/manage_creative_class_settings.dart';
 import 'package:preto3/view/AdminModule/add_parent.dart';
 import 'package:preto3/view/AdminModule/admin_staff_profile.dart';
@@ -109,7 +111,8 @@ import 'package:preto3/view/sign_up_school_page.dart';
 import 'package:preto3/view/splash_page.dart';
 import 'package:preto3/view/AdminModule/students_management/student_detail_page.dart';
 // import 'package:url_launcher/url_launcher.dart';
-import 'binding/Admin/Room/manage_creative_class_settings_binding.dart';
+import 'binding/Admin/checkin_checkout_management/checkin_checkout.dart';
+import 'binding/Admin/room_management/manage_creative_class_settings_binding.dart';
 import 'binding/Admin/drawer/add_new_profile_binding.dart';
 import 'binding/Admin/staff_management/add_new_staff_profile.dart';
 import 'binding/Admin/drawer/admin_schedule_binding.dart';
@@ -482,6 +485,15 @@ class MyApp extends StatelessWidget {
           name: AppRoute.manageCreativeClassSettings,
           page: () =>  ManageCreativeClassSettings(),
            binding: ManageCreativeClassSettingsBinding()
+        ),
+        GetPage(
+          name: AppRoute.adminAddEvent,
+          page: () => AdminAddEvents(),
+        ),
+        GetPage(
+          name: AppRoute.adminCheckInCheckOut,
+          page: () => CheckInCheckOutPage(),
+          binding: AdminCheckInCheckOutBinding()
         )
       ],
     );

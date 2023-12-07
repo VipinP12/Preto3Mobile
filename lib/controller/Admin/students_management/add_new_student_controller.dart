@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../model/race_model.dart';
 import '../../../model/room_list_model.dart';
 import '../../../model/school_programme_model.dart';
@@ -25,6 +26,9 @@ class ProfileAddStudentController extends GetxController with BaseController{
   var enrollmentIndex = 0.obs;
   var raceId = 0.obs;
   var selectedRace = "".obs;
+  var selectedImagePath = ''.obs;
+  var selectedFileName = ''.obs;
+
   RaceList? raceType;
   EthnicityList? ethnicType;
   var ethnicityId = 0.obs;
@@ -37,8 +41,10 @@ class ProfileAddStudentController extends GetxController with BaseController{
   var selectedProgramme = "".obs;
   SchoolProgrammeModelDart? programmeType;
   var roomId = 0.obs;
+  var userId = 0.obs;
   var selectedRoom = "".obs;
   RoomListModel? roomType;
+  var firstNameController = TextEditingController();
   var allergiesController = TextEditingController();
   var medicationController = TextEditingController();
   String selectedValue = 'Hindi';
@@ -211,6 +217,18 @@ class ProfileAddStudentController extends GetxController with BaseController{
         .catchError(handleError);
     schoolProgrammeList.value = schoolProgrammeModelDartFromJson(response)!;
     update();
+  }
+  void getImage(ImageSource imageSource) async {
+    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+    if (pickedFile != null) {
+      selectedImagePath.value = pickedFile.path;
+      selectedFileName.value =
+          firstNameController.text + userId.value.toString();
+      print("FILE NAME ${selectedFileName}");
+    } else {
+      Get.snackbar("Error", "No Image Selected",
+          snackPosition: SnackPosition.BOTTOM);
+    }
   }
 
 }

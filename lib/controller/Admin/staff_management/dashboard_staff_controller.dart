@@ -118,7 +118,7 @@ class AdminStaffController extends GetxController with BaseController {
         .get(
         ApiEndPoints.devBaseUrl,
         '${ApiEndPoints.allActiveStaffList}'
-           '?classId=0&isActive=true&schoolId=1002939')
+           '?classId=0&isActive=true&schoolId=${schoolId.value}')
         .catchError(handleError);
     allActiveStaffList.value = allStaffListFromJson(response)!;
     print("response data ${response}");

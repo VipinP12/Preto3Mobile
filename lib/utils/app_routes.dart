@@ -75,6 +75,7 @@ class AppRoute {
   static const addStaffProfile = "/add-staff-profile";
   static const feesManagement = "/fees-management";
   static const invoiceDetail = "/invoice-detail";
+  static const adminCheckInCheckOut = "/admin-checkIn-checkout";
 
 
   //PARENT
