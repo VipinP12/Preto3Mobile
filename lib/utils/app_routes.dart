@@ -72,6 +72,8 @@ class AppRoute {
   static const adminAuthorizePickupDetail ="/admin-authorize-pickup-detail";
   static const addPrimaryParent = "/add-primary-parent";
   static const adminAddEvent = "/admin-add-event";
+  static const selectStaffInvitees = "/select-staff-invitees";
+   static const selectStudentInvitees = "/select-student-invitees";
   static const addStaffProfile = "/add-staff-profile";
   static const feesManagement = "/fees-management";
   static const invoiceDetail = "/invoice-detail";

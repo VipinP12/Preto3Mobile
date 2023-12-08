@@ -40,6 +40,8 @@ import 'package:preto3/binding/select_role_binding.dart';
 import 'package:preto3/binding/sign_up_binding.dart';
 import 'package:preto3/binding/splash_binding.dart';
 import 'package:preto3/binding/Admin/students_management/student_binding.dart';
+import 'package:preto3/view/AdminModule/drawer/event_view/select_staff_invitees_page.dart';
+import 'package:preto3/view/AdminModule/drawer/event_view/select_student_invitees_page.dart';
 import 'package:preto3/view/AdminModule/room_management/room_setting/manage_creative_class_settings.dart';
 import 'package:preto3/view/AdminModule/add_parent.dart';
 import 'package:preto3/view/AdminModule/admin_staff_profile.dart';
@@ -93,6 +95,7 @@ import 'package:preto3/view/daily_activity_select_student.dart';
 import 'package:preto3/view/daily_activity_set_time.dart';
 import 'package:preto3/view/AdminModule/drawer/event_view/event_details.dart';
 import 'package:preto3/view/AdminModule/drawer/event_view/event_page.dart';
+import 'package:preto3/view/AdminModule/drawer/event_view/event_add_page.dart';
 import 'package:preto3/view/forgot_password_page.dart';
 import 'package:preto3/view/login_page.dart';
 import 'package:preto3/view/onboarding_page.dart';
@@ -401,6 +404,18 @@ class MyApp extends StatelessWidget {
             name: AppRoute.event,
             page: () => EventPage(),
             binding: EventBinding()),
+GetPage(
+            name: AppRoute.adminAddEvent,
+            page: () => EventAddPage(),  
+            ),
+            GetPage(
+            name: AppRoute.selectStaffInvitees,
+            page: () => SelectStaffInvitees(),  
+            ),
+            GetPage(
+            name: AppRoute.selectStudentInvitees,
+            page: () => SelectStudentInvitees(),  
+            ),
         GetPage(
             name: AppRoute.adminAuthorizePickup,
             page: () => AdminAuthorizePickUp(),

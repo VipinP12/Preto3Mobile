@@ -38,6 +38,8 @@ class EventController extends GetxController with BaseController {
   var upcomingEvent = <AllEventModel>[].obs;
   var pastEvent = <AllEventModel>[].obs;
   var ongoingEvent = <AllEventModel>[].obs;
+   RxBool isAllDayEventChecked = false.obs;
+  RxBool isAnnouncementChecked = false.obs;
   @override
   void onInit() {
     roleId.value = storageBox.read(AppKeys.keyRoleId);
@@ -64,6 +66,25 @@ class EventController extends GetxController with BaseController {
     );
     //getEventDetails(schoolId.value, roleId.value, true);
     super.onReady();
+  }
+
+
+void allDayEventCheckbox(bool? value) {
+    if (value != null && value != isAllDayEventChecked.value) {
+      isAllDayEventChecked.value = value;
+      if (value) {
+        isAnnouncementChecked.value = false; // Uncheck the other option
+      }
+    }
+  }
+
+  void announcementCheckbox(bool? value) {
+    if (value != null && value != isAnnouncementChecked.value) {
+      isAnnouncementChecked.value = value;
+      if (value) {
+        isAllDayEventChecked.value = false; // Uncheck the other option
+      }
+    }
   }
 
   void nextDate() {
