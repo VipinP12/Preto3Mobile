@@ -66,6 +66,7 @@ class ApiEndPoints {
   static const updateDefaultPaymentMethod = "/invoice/updateDefaultPaymentMethod";
   static const allStudentByRoom = "/room/getById";
   static const checkList = "/checkInOut/allStudents";
+  static const checkInOutStaffList = "/checkInOut/allStaff";
   static const getAllLanguages = "/language/all";
   static const staffDetails = "/staff/getStaffProfileDetails";
   static const forgotPassword = "/user/forgotPassword";

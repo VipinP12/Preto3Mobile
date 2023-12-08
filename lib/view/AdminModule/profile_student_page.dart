@@ -74,12 +74,12 @@ class ProfileStudentPage extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          Text("${ profileController.firstNameController.text} ${ profileController.lastNameController.text}",
+                          Obx(() => Text("${ profileController.firstName.value} ${ profileController.lastName.value}",
                             style: GoogleFonts.poppins(
                                 color: AppColor.white,
                                 fontSize: 24,
                                 fontWeight: FontWeight.w400),
-                          ),
+                          ),),
                           const SizedBox(
                             height: 10,
                           ),

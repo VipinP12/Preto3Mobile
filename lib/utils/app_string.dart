@@ -9,6 +9,7 @@ class AppString{
   static const String fees="Fees Management";
   static const String schoolSetting="School Settings";
   static const String tabStudent="Student";
+  static const String tabCheckInOutStudent="Student";
   static const String tabStaff="Staff";
   static const String tabGroup="Group";
   static const String roomList="Room List";

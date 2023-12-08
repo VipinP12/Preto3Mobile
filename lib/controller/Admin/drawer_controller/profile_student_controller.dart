@@ -174,9 +174,9 @@ class ProfileStudentController extends GetxController with BaseController {
           .catchError(handleError);
 
       profileResponse = studentProfileModelDartFromJson(response);
-      firstNameController.text =
+      firstName.value =
           profileResponse!.studentPersonalDetails.firstName;
-      lastNameController.text =
+      lastName.value =
           profileResponse!.studentPersonalDetails.lastName;
       log("PROFILE RESP:${profileResponse!.studentPersonalDetails.firstName}");
       log("PROFILE RESP:${profileResponse!.studentEnrollmentDetails.programName}");

@@ -1,3 +1,4 @@
+ 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,9 @@ import 'package:preto3/network/api_end_points.dart';
 import 'package:preto3/network/base_client.dart';
 import 'package:preto3/utils/app_keys.dart';
 
-class CheckInCheckOutController extends GetxController with BaseController {
+import '../../../model/admit/checkIn_CheckOut.dart';
+
+class CheckInCheckOutController extends GetxController with BaseController,GetSingleTickerProviderStateMixin {
   final storageBox = GetStorage();
   dynamic argumentData = Get.arguments;
   // final staffDashboardController = Get.find<StaffDashboardController>();
@@ -23,6 +26,7 @@ class CheckInCheckOutController extends GetxController with BaseController {
   var roomId = 0.obs;
   var isLoading = false.obs;
   var isSelected = false.obs;
+  var isSelectedStaff = false.obs;
   var canCheckIn = true.obs;
   var isVisible = true.obs;
   var isValid = false.obs;
@@ -46,14 +50,27 @@ class CheckInCheckOutController extends GetxController with BaseController {
   var isEnableCheckOutButton = false.obs;
 
   RoomListModel? room;
+  RoomListModel? staffRoom;
   final allRoomList = <RoomListModel?>[].obs;
+  final allStaffRoomList = <RoomListModel?>[].obs;
   final checkList = <CheckInModel>[].obs;
+  final checkStaffList = <CheckInCheckOutStaff>[].obs;
   final checkAbsentList = <CheckInModel>[].obs;
   final checkPresentList = <CheckInModel>[].obs;
   final idList = <int>[].obs;
 
   var noContentFound = false.obs;
   var message = "".obs;
+ 
+  late TabController tabController;
+  final List<Tab> myTabs = const [
+    Tab(
+      text: "Student",
+    ),
+    Tab(
+      text: "Staff",
+    ),
+  ];
 
   @override
   void onInit() {
@@ -61,9 +78,8 @@ class CheckInCheckOutController extends GetxController with BaseController {
     schoolId.value = storageBox.read(AppKeys.keySchoolId);
     var currentDate = DateTime.now();
     nowDate.value = DateFormat('yyyy-MM-dd').format(currentDate).toString();
-    selectedDate.value =
-        DateFormat('EEE,MM/dd/yyyy').format(currentDate).toString();
-
+    selectedDate.value = DateFormat('EEE,MM/dd/yyyy').format(currentDate).toString();
+    tabController = TabController(length: myTabs.length, vsync: this, );
     super.onInit();
   }
 
@@ -72,6 +88,7 @@ class CheckInCheckOutController extends GetxController with BaseController {
     super.onReady();
     await getAllRoomList(roleId.value, schoolId.value);
     getAllStudent(nowDate.value, schoolId.value);
+    getAllStaff(nowDate.value,schoolId.value);
   }
 
   Future<void> getAllRoomList(int roomId, int schoolId) async {
@@ -83,6 +100,7 @@ class CheckInCheckOutController extends GetxController with BaseController {
     if (response != null) {
       print("RESPONSE:$response");
       allRoomList.value = roomListModelFromJson(response)!;
+      allStaffRoomList.value = roomListModelFromJson(response)!;
       hideLoadingHideBackground();
       update();
     } else {
@@ -107,13 +125,27 @@ class CheckInCheckOutController extends GetxController with BaseController {
     update();
   }
 
+  void setClassStaffRoom(RoomListModel roomModel){
+    roomId.value = roomModel.classId!;
+    staffRoom = roomModel;
+    getAllStaffByRoom(roomId.value, nowDate.value, schoolId.value);
+    update();
+  }
   void selectStudent(bool selected) {
     isSelected.value = !selected;
+    update();
+  }
+  void selectStudentStaff(bool selected) {
+    isSelectedStaff.value = !selected;
     update();
   }
 
   void setAllStudent(bool selected) {
     isSelected.value = !selected;
+    update();
+  }
+  void setAllStudentStaff(bool selectedStaff) {
+    isSelectedStaff.value = !selectedStaff;
     update();
   }
 
@@ -137,6 +169,26 @@ class CheckInCheckOutController extends GetxController with BaseController {
       update();
     }
   }
+  void getAllStaffByRoom(int roomId, String date, int schoolId) async {
+    String timez = await configureLocalTimeZone();
+    var response = await BaseClient()
+        .get(
+        ApiEndPoints.devBaseUrl,
+        '${ApiEndPoints.checkInOutStaffList}'
+            '?roomId=$roomId&dateSelected=${nowDate.value}&schoolId=$schoolId&timezone=$timez')
+        .catchError(handleError);
+    if (response != null && response != "") {
+      checkStaffList.value = checkInCheckOutStaffFromJson(response);
+      noContentFound.value = false;
+      update();
+    } else {
+      checkStaffList.value = [];
+      noContentFound.value = true;
+      message.value = errorMessage.value;
+      print(message.value);
+      update();
+    }
+  }
 
   void getAllStudent(String date, int schoolId) async {
     if (allRoomList.value.isNotEmpty) {
@@ -151,6 +203,24 @@ class CheckInCheckOutController extends GetxController with BaseController {
       if (response != null && response != "") {
         checkList.value = checkInModelFromJson(response);
         isSelected.value = false;
+        update();
+      }
+      hideLoading();
+    }
+  }
+  void getAllStaff(String date, int schoolId) async {
+    if (allRoomList.value.isNotEmpty) {
+      showLoading("");
+      String timez = await configureLocalTimeZone();
+      var response = await BaseClient()
+          .get(
+          ApiEndPoints.devBaseUrl,
+          '${ApiEndPoints.checkInOutStaffList}'
+              '?schoolId=$schoolId&dateSelected=$date&timezone=$timez')
+          .catchError(handleError);
+      if (response != null && response != "") {
+        checkStaffList.value = checkInCheckOutStaffFromJson(response);
+        isSelectedStaff.value = false;
         update();
       }
       hideLoading();
