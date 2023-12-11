@@ -80,6 +80,7 @@ class ApiEndPoints {
   static const punchStudentCheckInOut = "/checkInOut/studentCheckInOut";
   static const parentProfileUpdate = "/parent/updateProfile";
   static const qrCode = "/profile/getQRcode";
+  static const adminQrCode = "profile/generateSchoolQRCode";
   static const parentSaveGroup = "/openFireCommunication/saveGroups";
   static const autoCompleteSearch = "/autocomplete/json?";
   static const getGroups = "/openFireCommunication/groups";

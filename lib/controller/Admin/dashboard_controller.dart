@@ -18,11 +18,13 @@ import 'package:preto3/utils/app_color.dart';
 import 'package:preto3/utils/app_keys.dart';
 import 'package:preto3/utils/app_string.dart';
 
+import '../../model/admit/qr_code.dart';
+
 class DashboardController extends GetxController with BaseController {
   final storageBox = GetStorage();
   dynamic argumentData = Get.arguments;
   var scaffoldKey = GlobalKey<ScaffoldState>();
-
+  var qrCode = "".obs;
   var firstName = "".obs;
   var lastName = "".obs;
   var birthDate = "".obs;
@@ -62,9 +64,8 @@ class DashboardController extends GetxController with BaseController {
   @override
   void onReady() {
     getAdminDashboard(roleId.value, schoolId.value, isWebRequest);
-    Get.find<DailyActivityController>()
-        .getAllActivity(schoolId.value, roleId.value);
-
+    Get.find<DailyActivityController>().getAllActivity(schoolId.value, roleId.value);
+    getQrCode(schoolId.value, roleId.value);
   }
 
   //ADMIN DASHBOARD
@@ -106,6 +107,19 @@ class DashboardController extends GetxController with BaseController {
     scaffoldKey.currentState!.openEndDrawer();
   }
 
+  void getQrCode(int schoolId, int roleId) async {
+    var response = await BaseClient()
+        .get(ApiEndPoints.devBaseUrl,
+        '${ApiEndPoints.adminQrCode}'
+            '?schoolId=$schoolId&roleId=$roleId')
+        .catchError(handleError);
+    print("vandana response ${response}");
+    if (response != null) {
+      var qrResponse = qrCodeModuleFromJson(response);
+      log("SCHOOL NAME:${qrResponse.schoolName}");
+      qrCode.value = qrResponse.qrCode;
+    }
+  }
   void getAdminDashboard(int roleId, int schoolId, bool isWebRequest) async {
     showLoading('Fetching data');
     var response = await BaseClient()

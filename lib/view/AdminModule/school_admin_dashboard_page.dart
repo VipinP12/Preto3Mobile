@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -46,9 +47,17 @@ class DashboardPage extends StatelessWidget {
               color: AppColor.white, fontSize: 18, fontWeight: FontWeight.w600),
         ),
         actions: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(Icons.qr_code),
+          InkWell(
+            onTap: (){
+              print("QRCode");
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => showQRDialog());
+            },
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.qr_code),
+            ),
           )
         ],
       ),
@@ -770,6 +779,27 @@ class DashboardPage extends StatelessWidget {
           ],
         ),
       )),
+    );
+  }
+
+  showQRDialog() {
+    final byteImage =
+    const Base64Decoder().convert(dashboardController.qrCode.value);
+    print("qrcode image ****${Base64Decoder().convert(dashboardController.qrCode.value)}");
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      child: Container(
+          height: 300,
+          width: 300,
+          decoration: BoxDecoration(
+              color: AppColor.white, borderRadius: BorderRadius.circular(10)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.memory(
+              byteImage,
+              fit: BoxFit.cover,
+            ),
+          )),
     );
   }
 }
